@@ -1,0 +1,63 @@
+@import "@styles/colors";
+
+$titlebarButtonBackgroundSize: 1.25em;
+
+.toolbar-button {
+  --button-size: 3em;
+
+  background-color: $color-primary-5;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: $titlebarButtonBackgroundSize $titlebarButtonBackgroundSize;
+  border: 2px solid $color-text-light; /* Same px value as used by Joubel in Interactive Book */
+  border-radius: 3px; /* Same px value as used by Joubel in Interactive Book */
+  font-size: 1em;
+  height: var(--button-size);
+  padding: 0;
+  width: var(--button-size);
+
+  &:not(.toolbar-button-disabled) {
+    &:hover {
+      background-color: $color-primary-10;
+      cursor: pointer;
+    }
+
+    &:active {
+      background-color: $color-primary-25;
+    }
+
+    &.toolbar-button-active {
+      background-color: $color-primary;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: $titlebarButtonBackgroundSize $titlebarButtonBackgroundSize;
+      opacity: 20;
+
+      &:hover {
+        background-color: $color-primary-90;
+        cursor: pointer;
+      }
+
+      &:active {
+        background-color: $color-primary-95;
+      }
+    }
+  }
+
+  &.toolbar-button-disabled {
+    background-color: $color-disabled;
+
+    &::before {
+      color: #fff;
+    }
+  }
+}
+
+.toolbar-button-display-none {
+  display: none;
+}
+
+.toolbar-button-cloak {
+  visibility: hidden;
+  opacity: 0;
+}

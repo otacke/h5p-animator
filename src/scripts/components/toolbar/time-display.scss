@@ -1,0 +1,24 @@
+@import "@styles/colors";
+
+.h5p-animator-time-display {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  padding: 0 0.25rem;
+
+  .h5p-animator-time-display-current {
+    color: $color-primary-dark;
+  }
+
+  .h5p-animator-time-display-separator {
+    margin: 0 0.125rem;
+  }
+
+  .h5p-animator-time-display-max {
+    color: $color-text;
+  }
+
+  &.display-none {
+    display: none;
+  }
+}

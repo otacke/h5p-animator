@@ -1,0 +1,22 @@
+@import "./colors";
+
+html {
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+.h5p-animator {
+  background-color: $color-background;
+  color: $color-text;
+  width: 100%;
+
+  .h5p-animator-main {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

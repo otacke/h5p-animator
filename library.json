@@ -1,0 +1,48 @@
+{
+  "title": "Animator",
+  "description": "H5P content type to create web animations with",
+  "majorVersion": 1,
+  "minorVersion": 0,
+  "patchVersion": 0,
+  "runnable": 1,
+  "author": "Oliver Tacke",
+  "license": "MIT",
+  "machineName": "H5P.Animator",
+  "embedTypes": [
+    "iframe"
+  ],
+  "preloadedDependencies": [
+    {
+      "machineName": "FontAwesome",
+      "majorVersion": 4,
+      "minorVersion": 5
+    }
+  ],
+  "editorDependencies": [
+    {
+      "machineName": "H5PEditor.Animator",
+      "majorVersion": 1,
+      "minorVersion": 0
+    },
+    {
+      "machineName": "H5PEditor.ColorSelector",
+      "majorVersion": 1,
+      "minorVersion": 3
+    },
+    {
+      "machineName": "H5PEditor.ShowWhen",
+      "majorVersion": 1,
+      "minorVersion": 0
+    }
+  ],
+  "preloadedJs": [
+    {
+      "path": "dist/h5p-animator.js"
+    }
+  ],
+  "preloadedCss": [
+    {
+      "path": "dist/h5p-animator.css"
+    }
+  ]
+}

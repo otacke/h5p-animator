@@ -1,0 +1,15 @@
+.h5p-animator-canvas {
+  aspect-ratio: var(--aspect-ratio, 16/9);
+  background-color: var(--background-color, rgba(0, 0, 0, 0));
+  max-height: var(--max-height, none);
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+
+  &.has-background-image {
+    background-image: var(--background-image);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
