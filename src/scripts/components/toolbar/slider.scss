@@ -28,16 +28,6 @@ $sliderHeight: 3em;
       opacity: 1;
     }
 
-    &:focus {
-      &::-webkit-slider-thumb {
-        box-shadow: 0 0 0 0.5rem var(--color-primary-20);
-      }
-
-      &::-moz-range-thumb {
-        box-shadow: 0 0 0 0.5rem var(--color-primary-20);
-      }
-    }
-
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
@@ -78,6 +68,16 @@ $sliderHeight: 3em;
 
       &:focus {
         box-shadow: 0 0 0 0.5rem var(--color-primary-30);
+      }
+    }
+
+    &:focus {
+      &::-webkit-slider-thumb {
+        box-shadow: 0 0 0 0.5rem var(--color-primary-20);
+      }
+
+      &::-moz-range-thumb {
+        box-shadow: 0 0 0 0.5rem var(--color-primary-20);
       }
     }
   }
