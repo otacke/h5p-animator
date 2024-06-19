@@ -128,13 +128,10 @@ export default class CanvasElement {
       .map((animation) => {
         const animationParams = {
           targets: dom,
-          startWith: animation.startWith
-        };
-
-        const specificPropParams = {
+          startWith: animation.startWith,
           easing: animation.easing,
-          delay: parseFloat(animation.delay) * 1000,
-          duration: parseFloat(animation.duration) * 1000,
+          delay: animation.delay * 1000,
+          duration: animation.duration * 1000
         };
 
         if (animation.effect === 'flyIn') {
@@ -151,45 +148,37 @@ export default class CanvasElement {
           );
 
           if (offsiteX !== 0) {
-            animationParams.translateX =
-              {
-                ...specificPropParams,
-                value: [`${offsiteX}%`, '0%']
-              };
+            animationParams.translateX = [
+              { value: `${offsiteX}%`, duration: 0 },
+              { value: '0%', duration: animationParams.duration }
+            ];
           }
 
           if (offsiteY !== 0) {
-            animationParams.translateY =
-            {
-              ...specificPropParams,
-              value: [`${offsiteY}%`, '0%']
-            };
+            animationParams.translateY = [
+              { value: `${offsiteY}%`, duration: 0 },
+              { value: '0%', duration: animationParams.duration }
+            ];
           }
         }
         else if (animation.effect === 'fadeIn') {
-          animationParams.opacity = {
-            ...specificPropParams,
-            value: [0, 1]
-          };
+          animationParams.opacity = [
+            { value: 0, duration: 0 },
+            { value: 1, duration: animationParams.duration }
+          ];
         }
         else if (animation.effect === 'zoomIn') {
-          animationParams.scale = {
-            ...specificPropParams,
-            value: [0, 1]
-          };
+          animationParams.scale = [
+            { value: 0, duration: 0 },
+            { value: 1, duration: animationParams.duration }
+          ];
         }
         else if (animation.effect === 'rotate') {
-          animationParams.rotate =
-            {
-              ...specificPropParams,
-              value: animation.rotate
-            };
+          animationParams.rotate = [
+            { value: animation.rotate }
+          ];
         }
         else if (animation.effect === 'pulse') {
-          Object.keys(specificPropParams).forEach((key) => {
-            animationParams[key] = specificPropParams[key];
-          });
-
           animationParams.scale = [
             { value: 1 },
             { value: 1.05 },
@@ -197,10 +186,6 @@ export default class CanvasElement {
           ];
         }
         else if (animation.effect === 'wobble') {
-          Object.keys(specificPropParams).forEach((key) => {
-            animationParams[key] = specificPropParams[key];
-          });
-
           animationParams.translateX = [
             { value: 0 },
             { value: '-25%' },
@@ -212,10 +197,6 @@ export default class CanvasElement {
           ];
         }
         else if (animation.effect === 'shakeX') {
-          Object.keys(specificPropParams).forEach((key) => {
-            animationParams[key] = specificPropParams[key];
-          });
-
           animationParams.translateX = [
             { value: 0 },
             { value: '-10%' },
@@ -227,10 +208,6 @@ export default class CanvasElement {
           ];
         }
         else if (animation.effect === 'shakeY') {
-          Object.keys(specificPropParams).forEach((key) => {
-            animationParams[key] = specificPropParams[key];
-          });
-
           animationParams.translateY = [
             { value: 0 },
             { value: '-10%' },
@@ -242,15 +219,13 @@ export default class CanvasElement {
           ];
         }
         else if (animation.effect === 'translate') {
-          animationParams.translateX = {
-            ...specificPropParams,
-            value: `${animation.translateX}%`
-          };
+          animationParams.translateX = [
+            { value: `${animation.translateX}%` }
+          ];
 
-          animationParams.translateY = {
-            ...specificPropParams,
-            value: `${animation.translateY}%`
-          };
+          animationParams.translateY = [
+            { value: `${animation.translateY}%` }
+          ];
         }
         if (animation.effect === 'flyOut') {
           const offsiteX = this.calculateOffsiteX(
@@ -266,30 +241,30 @@ export default class CanvasElement {
           );
 
           if (offsiteX !== 0) {
-            animationParams.translateX = {
-              ...specificPropParams,
-              value: ['0%', `${offsiteX}%`]
-            };
+            animationParams.translateX = [
+              { value: '0%', duration: 0 },
+              { value: `${offsiteX}%`, duration: animationParams.duration }
+            ];
           }
 
           if (offsiteY !== 0) {
-            animationParams.translateY = {
-              ...specificPropParams,
-              value: ['0%', `${offsiteY}%`]
-            };
+            animationParams.translateY = [
+              { value: '0%', duration: 0 },
+              { value: `${offsiteY}%`, duration: animationParams.duration }
+            ];
           }
         }
         else if (animation.effect === 'fadeOut') {
-          animationParams.opacity = {
-            ...specificPropParams,
-            value: [1, 0]
-          };
+          animationParams.opacity = [
+            { value: 1, duration: 0 },
+            { value: 0, duration: animationParams.duration }
+          ];
         }
         else if (animation.effect === 'zoomOut') {
-          animationParams.scale = {
-            ...specificPropParams,
-            value: [1, 0]
-          };
+          animationParams.scale = [
+            { value: 1, duration: 0 },
+            { value: 0, duration: animationParams.duration }
+          ];
         }
 
         return animationParams;
