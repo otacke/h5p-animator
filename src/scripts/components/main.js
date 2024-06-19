@@ -157,7 +157,9 @@ export default class AnimatorMain {
     }
 
     this.canvas.pause();
-    this.jukebox.stop('background');
+    if (this.hasAudio) {
+      this.jukebox.stop('background');
+    }
   }
 
   /**
@@ -175,7 +177,9 @@ export default class AnimatorMain {
 
     this.canvas.seek(this.currentTime * 1000);
     this.canvas.play();
-    this.jukebox.play('background', this.currentTime);
+    if (this.hasAudio) {
+      this.jukebox.play('background', this.currentTime);
+    }
 
     this.update();
   }
