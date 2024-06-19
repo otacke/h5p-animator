@@ -15,6 +15,15 @@ export default class CanvasElement {
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-animator-canvas-element');
 
+    const machineName = this.params.contentType?.library?.split(' ')[0];
+    if (machineName === 'H5P.Video') {
+      /*
+       * H5P.Video currently has a bug that prevents this from taking effect.
+       * Fixed with workaround below.
+       */
+      this.params.contentType.params.visuals.disableFullscreen = true;
+    }
+
     this.instance = H5P.newRunnable(
       this.params.contentType,
       this.params.globals.get('contentId'),
@@ -25,6 +34,17 @@ export default class CanvasElement {
     this.dom.style.top = `${this.params.geometry.y}%`;
     this.dom.style.width = `${this.params.geometry.width}%`;
     this.dom.style.height = `${this.params.geometry.height}%`;
+
+    // Workaround for H5P.Video bug up to 1.6.50 at least
+    if (machineName === 'H5P.Video') {
+      const html5Video = this.dom.querySelector('.h5p-video video');
+      if (html5Video) {
+        html5Video.setAttribute(
+          'controlslist',
+          `${html5Video.getAttribute('controlslist')} nofullscreen`
+        );
+      }
+    }
 
     if (!this.instance) {
       return;
@@ -96,6 +116,7 @@ export default class CanvasElement {
   /**
    * Create animations for anime.js timeline.
    * // TODO: Use "lookup table"
+   * // TODO: Allow overlapping animations
    * @param {object[]} animations Parameters set by editor.
    * @param {HTMLElement} dom element to animate.
    * @returns {object[]} Animations for anime.js timeline.
