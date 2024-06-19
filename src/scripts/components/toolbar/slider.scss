@@ -21,6 +21,7 @@ $sliderHeight: 3em;
     opacity: 0.7;
     outline: none;
     -webkit-transition: .2s;
+    touch-action: none;
     transition: opacity .2s;
     width: 100%;
 
