@@ -211,7 +211,7 @@ export default class AnimatorMain {
   fillJukebox() {
     const audios = {};
 
-    if (this.params.audio.audio[0]?.path) {
+    if (this.params.audio.audio?.[0]?.path) {
       const src = H5P.getPath(
         this.params.audio.audio[0].path, this.params.globals.get('contentId')
       );

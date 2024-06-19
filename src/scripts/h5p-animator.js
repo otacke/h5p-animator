@@ -20,6 +20,7 @@ export default class Animator extends H5P.EventDispatcher {
         background: {},
         elements: []
       },
+      audio: {},
       behaviour: {
         aspectRatio: Animator.DEFAULT_ASPECT_RATIO
       }
