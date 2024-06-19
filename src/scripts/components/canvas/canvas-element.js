@@ -115,6 +115,8 @@ export default class CanvasElement {
 
   /**
    * Create animations for anime.js timeline.
+   * // TODO: Can we work around the limitations of starting animations that require
+   * //       changes to the same property value at the same time?
    * // TODO: Use "lookup table"
    * // TODO: When editor is in place, this needs to work with one global timeline
    * @param {object[]} animations Parameters set by editor.
@@ -184,56 +186,60 @@ export default class CanvasElement {
             };
         }
         else if (animation.effect === 'pulse') {
-          animationParams.keyframes = {
-            ... specificPropParams,
-            value: [
-              { scale: 1 },
-              { scale: 1.05 },
-              { scale: 1 }
-            ]
-          };
+          Object.keys(specificPropParams).forEach((key) => {
+            animationParams[key] = specificPropParams[key];
+          });
+
+          animationParams.scale = [
+            { value: 1 },
+            { value: 1.05 },
+            { value: 1 }
+          ];
         }
         else if (animation.effect === 'wobble') {
-          animationParams.keyframes = {
-            ... specificPropParams,
-            value: [
-              { translateX: 0 },
-              { translateX: '-25%' },
-              { translateX: '20%' },
-              { translateX: '-15%' },
-              { translateX: '10%' },
-              { translateX: '-5%' },
-              { translateX: 0 }
-            ]
-          };
+          Object.keys(specificPropParams).forEach((key) => {
+            animationParams[key] = specificPropParams[key];
+          });
+
+          animationParams.translateX = [
+            { value: 0 },
+            { value: '-25%' },
+            { value: '20%' },
+            { value: '-15%' },
+            { value: '10%' },
+            { value: '-5%' },
+            { value: 0 }
+          ];
         }
         else if (animation.effect === 'shakeX') {
-          animationParams.keyframes = {
-            ... specificPropParams,
-            value: [
-              { translateX: 0 },
-              { translateX: '-10%' },
-              { translateX: '10%' },
-              { translateX: '-10%' },
-              { translateX: '10%' },
-              { translateX: '-10%' },
-              { translateX: 0 }
-            ]
-          };
+          Object.keys(specificPropParams).forEach((key) => {
+            animationParams[key] = specificPropParams[key];
+          });
+
+          animationParams.translateX = [
+            { value: 0 },
+            { value: '-10%' },
+            { value: '10%' },
+            { value: '-10%' },
+            { value: '10%' },
+            { value: '-10%' },
+            { value: 0 }
+          ];
         }
         else if (animation.effect === 'shakeY') {
-          animationParams.keyframes = {
-            ... specificPropParams,
-            value: [
-              { translateY: 0 },
-              { translateY: '-10%' },
-              { translateY: '10%' },
-              { translateY: '-10%' },
-              { translateY: '10%' },
-              { translateY: '-10%' },
-              { translateY: 0 }
-            ]
-          };
+          Object.keys(specificPropParams).forEach((key) => {
+            animationParams[key] = specificPropParams[key];
+          });
+
+          animationParams.translateY = [
+            { value: 0 },
+            { value: '-10%' },
+            { value: '10%' },
+            { value: '-10%' },
+            { value: '10%' },
+            { value: '-10%' },
+            { value: 0 }
+          ];
         }
         else if (animation.effect === 'translate') {
           animationParams.translateX = {
