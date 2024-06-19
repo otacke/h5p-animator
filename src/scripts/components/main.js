@@ -122,7 +122,6 @@ export default class AnimatorMain {
     else {
       this.start();
     }
-    this.isPlayingState = !this.isPlayingState;
   }
 
   /**
@@ -153,6 +152,7 @@ export default class AnimatorMain {
     this.lastTickMS = Date.now();
     this.toolbar.forceButton('play', true, { noCallback: true });
     // Ensure that all timelines are synced with global time
+    this.isPlayingState = true;
     this.canvas.seek(this.currentTime * 1000);
     this.canvas.play();
     this.update();
