@@ -29,11 +29,7 @@ export default class AnimatorMain {
         globals: this.params.globals,
         elements: this.params.elements
       },
-      {
-        onClicked: () => {
-          this.handlePlayPause();
-        }
-      }
+      {}
     );
 
     this.duration = this.canvas.getDuration();
@@ -115,6 +111,11 @@ export default class AnimatorMain {
    * Handle play/pause request by user.
    */
   handlePlayPause() {
+    if (this.currentTime >= this.duration / 1000) {
+      this.stop();
+      return;
+    }
+
     if (this.isPlayingState) {
       this.stop();
     }
@@ -128,6 +129,7 @@ export default class AnimatorMain {
    * Stop animation.
    */
   stop() {
+    this.isPlayingState = false;
     window.clearTimeout(this.updateTimeout);
     this.toolbar.forceButton('play', false, { noCallback: true });
     this.canvas.pause();
@@ -138,7 +140,6 @@ export default class AnimatorMain {
    */
   start() {
     if (this.currentTime >= this.duration / 1000) {
-      this.stop();
       return;
     }
 
@@ -164,6 +165,10 @@ export default class AnimatorMain {
       this.canvas.seek(this.duration / 1000);
       this.toolbar.setSliderValue(this.duration / 1000);
       this.toolbar.setTimeDisplayValue(this.duration / 1000);
+
+      if (this.params.hideControls) {
+        this.toolbar.displayTemporarily();
+      }
       this.stop();
       return;
     }

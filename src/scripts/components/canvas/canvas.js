@@ -14,17 +14,11 @@ export default class Canvas {
       elements: [],
     }, params);
 
-    callbacks = Util.extend({
-      onClicked: () => {}
-    }, callbacks);
+    callbacks = Util.extend({}, callbacks);
 
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-animator-canvas');
     this.dom.style.setProperty('--aspect-ratio', params.aspectRatio ?? '16/9');
-
-    this.dom.addEventListener('click', () => {
-      callbacks.onClicked();
-    });
 
     if (params.backgroundColor) {
       this.dom.style.setProperty('--background-color', params.backgroundColor);

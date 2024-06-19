@@ -11,13 +11,11 @@ export default class Toolbar {
    * @class
    * @param {object} [params] Parameters.
    * @param {object[]} [params.buttons] Button parameters.
-   * @param {boolean} [params.hidden] If true, hide toolbar.
    * @param {object} [callbacks] Callbacks.
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
       buttons: [],
-      hidden: false,
       classes: []
     }, params);
 
@@ -128,9 +126,7 @@ export default class Toolbar {
             observer.unobserve(this.dom);
             observer.disconnect();
 
-            window.setTimeout(() => {
-              this.dom.classList.add('hidden');
-            }, 3000);
+            this.displayTemporarily();
           }
         }, { threshold: 0 });
         observer.observe(this.dom);
@@ -191,6 +187,17 @@ export default class Toolbar {
   }
 
   /**
+   * Display toolbar temporarily, then turn transparent.
+   * @param {number} [durationMs] Duration for showing.
+   */
+  displayTemporarily(durationMs = Toolbar.DEFAULT_DISPLAY_TIME_MS) {
+    this.dom.classList.remove('transparent');
+    window.setTimeout(() => {
+      this.dom.classList.add('transparent');
+    }, durationMs);
+  }
+
+  /**
    * Hide.
    */
   hide() {
@@ -224,3 +231,6 @@ export default class Toolbar {
 
 /** @constant {number} BREAKPOINT_HIDE_TIME_DISPLAY Breakpoint to hide time display */
 Toolbar.BREAKPOINT_HIDE_TIME_DISPLAY = 320;
+
+/** @constant {number} DEFAULT_DISPLAY_TIME_MS Default display time */
+Toolbar.DEFAULT_DISPLAY_TIME_MS = 3000;
