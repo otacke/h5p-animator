@@ -1,6 +1,7 @@
 import Util from '@services/util.js';
 import Canvas from '@components/canvas/canvas.js';
 import Toolbar from '@components/toolbar/toolbar.js';
+import Jukebox from '@services/jukebox.js';
 
 export default class AnimatorMain {
   /**
@@ -18,6 +19,17 @@ export default class AnimatorMain {
 
     this.isPlayingState = false;
     this.currentTime = 0;
+
+    this.jukebox = new Jukebox({
+      onAudioContextReady: () => {
+        if (this.isPlayingState) {
+          // Audio was not buffered yet when play was called, need to sync
+          this.jukebox.play('background', this.currentTime);
+          // Alternative: add loading incicator and block play until ready
+        }
+      }
+    });
+    this.fillJukebox();
 
     this.dom = document.createElement('div');
 
@@ -139,6 +151,7 @@ export default class AnimatorMain {
     }
 
     this.canvas.pause();
+    this.jukebox.stop('background');
   }
 
   /**
@@ -153,8 +166,11 @@ export default class AnimatorMain {
     this.toolbar.forceButton('play', true, { noCallback: true });
     // Ensure that all timelines are synced with global time
     this.isPlayingState = true;
+
     this.canvas.seek(this.currentTime * 1000);
     this.canvas.play();
+    this.jukebox.play('background', this.currentTime);
+
     this.update();
   }
 
@@ -187,5 +203,28 @@ export default class AnimatorMain {
     this.updateTimeout = window.setTimeout(() => {
       this.update();
     }, 40); // 25fps
+  }
+
+  /**
+   * Fill jukebox with audio.
+   */
+  fillJukebox() {
+    const audios = {};
+
+    if (this.params.audio.audio[0]?.path) {
+      const src = H5P.getPath(
+        this.params.audio.audio[0].path, this.params.globals.get('contentId')
+      );
+
+      const crossOrigin =
+        H5P.getCrossOrigin?.(this.params.audio.audio[0]) ??
+        'Anonymous';
+
+      audios.background = {
+        src: src,
+        crossOrigin: crossOrigin
+      };
+    }
+    this.jukebox.fill(audios);
   }
 }

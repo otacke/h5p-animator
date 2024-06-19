@@ -45,7 +45,12 @@ export default class Slider {
       this.keydownTime ++;
     });
 
+    this.slider.addEventListener('keydown', () => {
+      this.callbacks.onSliderStarted();
+    });
+
     this.slider.addEventListener('keyup', () => {
+      this.callbacks.onSliderEnded();
       this.keydownTime = 0;
     });
 

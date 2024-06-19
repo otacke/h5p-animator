@@ -347,6 +347,25 @@
     ]
   },
   {
+    "name": "audio",
+    "type": "group",
+    "label": "Audio",
+    "fields": [
+      {
+        "name": "audio",
+        "type": "audio",
+        "label": "Audio",
+        "description": "Select an audio file to play during the animation."
+      },
+      {
+        "name": "dummy",
+        "type": "boolean",
+        "label": "Dummy",
+        "widget": "none"
+      }
+    ]
+  },
+  {
     "name": "behaviour",
     "type": "group",
     "importance": "low",

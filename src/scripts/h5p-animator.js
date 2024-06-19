@@ -63,7 +63,8 @@ export default class Animator extends H5P.EventDispatcher {
         elements: this.params.editor.elements,
         dictionary: this.dictionary,
         globals: this.globals,
-        hideControls: this.params.behaviour.hideControls
+        hideControls: this.params.behaviour.hideControls,
+        audio: this.params.audio
       },
       {
         onFullscreenClicked: () => {
