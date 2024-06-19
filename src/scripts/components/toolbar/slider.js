@@ -78,6 +78,20 @@ export default class Slider {
   }
 
   /**
+   * Enable slider.
+   */
+  enable() {
+    this.slider.removeAttribute('disabled');
+  }
+
+  /**
+   * Disable slider.
+   */
+  disable() {
+    this.slider.setAttribute('disabled', '');
+  }
+
+  /**
    * Get value.
    * @returns {number} Value.
    */

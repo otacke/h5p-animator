@@ -180,6 +180,44 @@ export default class Toolbar {
   }
 
   /**
+   * Enable button.
+   * @param {string} id Button id.
+   */
+  enableButton(id = '') {
+    if (!this.buttons[id]) {
+      return; // Button not available
+    }
+
+    this.buttons[id].enable();
+  }
+
+  /**
+   * Disable button.
+   * @param {string} id Button id.
+   */
+  disableButton(id = '') {
+    if (!this.buttons[id]) {
+      return; // Button not available
+    }
+
+    this.buttons[id].disable();
+  }
+
+  /**
+   * Enable slider.
+   */
+  enableSlider() {
+    this.slider.enable();
+  }
+
+  /**
+   * Disable slider.
+   */
+  disableSlider() {
+    this.slider.disable();
+  }
+
+  /**
    * Show.
    */
   show() {

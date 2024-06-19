@@ -17,11 +17,10 @@ export default class Jukebox {
     // Handle audio was buffered successfully
     this.dispatcher.addEventListener('bufferloaded', (event) => {
       this.setAudioBuffer(event.detail);
+      this.callbacks.onAudioContextReady();
 
       if (this.queued.includes(event.detail.id)) {
         this.removeFromQueue(event.detail.id);
-
-        this.callbacks.onAudioContextReady();
         this.play(event.detail.id);
       }
     });

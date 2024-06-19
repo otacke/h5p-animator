@@ -20,16 +20,18 @@ export default class AnimatorMain {
     this.isPlayingState = false;
     this.currentTime = 0;
 
-    this.jukebox = new Jukebox({
-      onAudioContextReady: () => {
-        if (this.isPlayingState) {
-          // Audio was not buffered yet when play was called, need to sync
-          this.jukebox.play('background', this.currentTime);
-          // Alternative: add loading incicator and block play until ready
+    this.hasAudio = !!this.params.audio.audio?.[0]?.path;
+
+    if (this.hasAudio) {
+      this.jukebox = new Jukebox({
+        // Audio is buffered and ready to play
+        onAudioContextReady: () => {
+          this.toolbar?.enableButton('play');
+          this.toolbar?.enableSlider();
         }
-      }
-    });
-    this.fillJukebox();
+      });
+      this.fillJukebox();
+    }
 
     this.dom = document.createElement('div');
 
@@ -76,6 +78,10 @@ export default class AnimatorMain {
         }
       }
     );
+    if (this.hasAudio) {
+      this.toolbar.disableButton('play');
+      this.toolbar.disableSlider();
+    }
 
     if (this.params.hideControls) {
       this.dom.append(this.toolbar.getDOM());
