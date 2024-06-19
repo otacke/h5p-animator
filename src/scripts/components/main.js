@@ -44,7 +44,7 @@ export default class AnimatorMain {
       {
         onSliderStarted: () => {
           this.continueState = this.isPlayingState;
-          this.stop();
+          this.stop({ keepState: true });
         },
         onSliderSeeked: (value) => {
           this.currentTime = value;
@@ -127,11 +127,18 @@ export default class AnimatorMain {
 
   /**
    * Stop animation.
+   * @param {object} [params] Parameters.
+   * @param {boolean} [params.keepState] If true, don't change the state of the animation.
    */
-  stop() {
-    this.isPlayingState = false;
+  stop(params = {}) {
+    if (!params.keepState) {
+      this.isPlayingState = false;
+    }
     window.clearTimeout(this.updateTimeout);
-    this.toolbar.forceButton('play', false, { noCallback: true });
+    if (!params.keepState) {
+      this.toolbar.forceButton('play', false, { noCallback: true });
+    }
+
     this.canvas.pause();
   }
 
