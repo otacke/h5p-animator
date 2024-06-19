@@ -116,124 +116,197 @@ export default class CanvasElement {
   /**
    * Create animations for anime.js timeline.
    * // TODO: Use "lookup table"
-   * // TODO: Allow overlapping animations
+   * // TODO: When editor is in place, this needs to work with one global timeline
    * @param {object[]} animations Parameters set by editor.
    * @param {HTMLElement} dom element to animate.
    * @returns {object[]} Animations for anime.js timeline.
    */
   createAnimations(animations = [], dom) {
-    return animations.map((animation) => {
-      const animationParams = {
-        targets: dom,
-        easing: animation.easing,
-        delay: parseFloat(animation.delay) * 1000,
-        duration: parseFloat(animation.duration) * 1000,
-      };
+    return animations
+      .map((animation) => {
+        const animationParams = {
+          targets: dom,
+          startWith: animation.startWith
+        };
 
-      if (animation.effect === 'flyIn') {
-        const offsiteX = this.calculateOffsiteX(
-          this.params.geometry.x,
-          this.params.geometry.width,
-          animation.flyInDirection
-        );
+        const specificPropParams = {
+          easing: animation.easing,
+          delay: parseFloat(animation.delay) * 1000,
+          duration: parseFloat(animation.duration) * 1000,
+        };
 
-        const offsiteY = this.calculateOffsiteY(
-          this.params.geometry.y,
-          this.params.geometry.height,
-          animation.flyInDirection
-        );
+        if (animation.effect === 'flyIn') {
+          const offsiteX = this.calculateOffsiteX(
+            this.params.geometry.x,
+            this.params.geometry.width,
+            animation.flyInDirection
+          );
 
-        if (offsiteX !== 0) {
-          animationParams.translateX = [`${offsiteX}%`, '0%'];
+          const offsiteY = this.calculateOffsiteY(
+            this.params.geometry.y,
+            this.params.geometry.height,
+            animation.flyInDirection
+          );
+
+          if (offsiteX !== 0) {
+            animationParams.translateX =
+              {
+                ...specificPropParams,
+                value: [`${offsiteX}%`, '0%']
+              };
+          }
+
+          if (offsiteY !== 0) {
+            animationParams.translateY =
+            {
+              ...specificPropParams,
+              value: [`${offsiteY}%`, '0%']
+            };
+          }
+        }
+        else if (animation.effect === 'fadeIn') {
+          animationParams.opacity = {
+            ...specificPropParams,
+            value: [0, 1]
+          };
+        }
+        else if (animation.effect === 'zoomIn') {
+          animationParams.scale = {
+            ...specificPropParams,
+            value: [0, 1]
+          };
+        }
+        else if (animation.effect === 'rotate') {
+          animationParams.rotate =
+            {
+              ...specificPropParams,
+              value: animation.rotate
+            };
+        }
+        else if (animation.effect === 'pulse') {
+          animationParams.keyframes = {
+            ... specificPropParams,
+            value: [
+              { scale: 1 },
+              { scale: 1.05 },
+              { scale: 1 }
+            ]
+          };
+        }
+        else if (animation.effect === 'wobble') {
+          animationParams.keyframes = {
+            ... specificPropParams,
+            value: [
+              { translateX: 0 },
+              { translateX: '-25%' },
+              { translateX: '20%' },
+              { translateX: '-15%' },
+              { translateX: '10%' },
+              { translateX: '-5%' },
+              { translateX: 0 }
+            ]
+          };
+        }
+        else if (animation.effect === 'shakeX') {
+          animationParams.keyframes = {
+            ... specificPropParams,
+            value: [
+              { translateX: 0 },
+              { translateX: '-10%' },
+              { translateX: '10%' },
+              { translateX: '-10%' },
+              { translateX: '10%' },
+              { translateX: '-10%' },
+              { translateX: 0 }
+            ]
+          };
+        }
+        else if (animation.effect === 'shakeY') {
+          animationParams.keyframes = {
+            ... specificPropParams,
+            value: [
+              { translateY: 0 },
+              { translateY: '-10%' },
+              { translateY: '10%' },
+              { translateY: '-10%' },
+              { translateY: '10%' },
+              { translateY: '-10%' },
+              { translateY: 0 }
+            ]
+          };
+        }
+        else if (animation.effect === 'translate') {
+          animationParams.translateX = {
+            ...specificPropParams,
+            value: `${animation.translateX}%`
+          };
+
+          animationParams.translateY = {
+            ...specificPropParams,
+            value: `${animation.translateY}%`
+          };
+        }
+        if (animation.effect === 'flyOut') {
+          const offsiteX = this.calculateOffsiteX(
+            this.params.geometry.x,
+            this.params.geometry.width,
+            animation.flyOutDirection
+          );
+
+          const offsiteY = this.calculateOffsiteY(
+            this.params.geometry.y,
+            this.params.geometry.height,
+            animation.flyOutDirection
+          );
+
+          if (offsiteX !== 0) {
+            animationParams.translateX = {
+              ...specificPropParams,
+              value: ['0%', `${offsiteX}%`]
+            };
+          }
+
+          if (offsiteY !== 0) {
+            animationParams.translateY = {
+              ...specificPropParams,
+              value: ['0%', `${offsiteY}%`]
+            };
+          }
+        }
+        else if (animation.effect === 'fadeOut') {
+          animationParams.opacity = {
+            ...specificPropParams,
+            value: [1, 0]
+          };
+        }
+        else if (animation.effect === 'zoomOut') {
+          animationParams.scale = {
+            ...specificPropParams,
+            value: [1, 0]
+          };
         }
 
-        if (offsiteY !== 0) {
-          animationParams.translateY = [`${offsiteY}%`, '0%'];
+        return animationParams;
+      })
+      .reduce((acc, animation, index) => {
+        // Merge animations that should start at the same time
+        if (index === 0 || animation.startWith === 'afterPrevious') {
+          delete animation.startWith;
+          acc.push(animation);
         }
-      }
-      else if (animation.effect === 'fadeIn') {
-        animationParams.opacity = [0, 1];
-      }
-      else if (animation.effect === 'zoomIn') {
-        animationParams.scale = [0, 1];
-      }
-      else if (animation.effect === 'rotate') {
-        animationParams.rotate = animation.rotate;
-      }
-      else if (animation.effect === 'pulse') {
-        animationParams.keyframes = [
-          { scale: 1 },
-          { scale: 1.05 },
-          { scale: 1 }
-        ];
-      }
-      else if (animation.effect === 'wobble') {
-        animationParams.keyframes = [
-          { translateX: 0, rotate: 0 },
-          { translateX: '-25%', rotate: '-5deg' },
-          { translateX: '20%', rotate: '3deg' },
-          { translateX: '-15%', rotate: '-3deg' },
-          { translateX: '10%', rotate: '2deg' },
-          { translateX: '-5%', rotate: '-1deg' },
-          { translateX: 0 }
-        ];
-      }
-      else if (animation.effect === 'shakeX') {
-        animationParams.keyframes = [
-          { translateX: 0 },
-          { translateX: '-10%' },
-          { translateX: '10%' },
-          { translateX: '-10%' },
-          { translateX: '10%' },
-          { translateX: '-10%' },
-          { translateX: 0 }
-        ];
-      }
-      else if (animation.effect === 'shakeY') {
-        animationParams.keyframes = [
-          { translateY: 0 },
-          { translateY: '-10%' },
-          { translateY: '10%' },
-          { translateY: '-10%' },
-          { translateY: '10%' },
-          { translateY: '-10%' },
-          { translateY: 0 }
-        ];
-      }
-      else if (animation.effect === 'translate') {
-        animationParams.translateX = `${animation.translateX}%`;
-        animationParams.translateY = `${animation.translateY}%`;
-      }
-      if (animation.effect === 'flyOut') {
-        const offsiteX = this.calculateOffsiteX(
-          this.params.geometry.x,
-          this.params.geometry.width,
-          animation.flyOutDirection
-        );
+        else {
+          const previousAnimation = acc.pop();
+          Object.keys(animation).forEach((key) => {
+            if (key !== 'targets' && key !== 'startWith') {
+              previousAnimation[key] = animation[key];
+            }
+          });
 
-        const offsiteY = this.calculateOffsiteY(
-          this.params.geometry.y,
-          this.params.geometry.height,
-          animation.flyOutDirection
-        );
-
-        if (offsiteX !== 0) {
-          animationParams.translateX = ['0%', `${offsiteX}%`];
+          acc.push(previousAnimation);
         }
 
-        if (offsiteY !== 0) {
-          animationParams.translateY = ['0%', `${offsiteY}%`];
-        }
-      }
-      else if (animation.effect === 'fadeOut') {
-        animationParams.opacity = [1, 0];
-      }
-      else if (animation.effect === 'zoomOut') {
-        animationParams.scale = [1, 0];
-      }
-
-      return animationParams;
-    });
+        return acc;
+      }, []);
   }
 
   /**
