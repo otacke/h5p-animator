@@ -28,8 +28,10 @@ export default class Slider {
     this.slider.setAttribute('step', '0.025');
     this.slider.setAttribute('aria-label', this.params.ariaLabel);
 
-    this.slider.addEventListener('mousedown', (event) => {
-      this.callbacks.onSliderStarted();
+    ['keydown', 'mousedown', 'touchstart'].forEach((eventType) => {
+      this.slider.addEventListener(eventType, (event) => {
+        this.handleSliderStarted(event);
+      });
     });
 
     this.slider.addEventListener('keydown', (event) => {
@@ -40,15 +42,11 @@ export default class Slider {
         this.setValue(Math.max(0, this.getValue() - timeDeltaS));
       }
       else if (event.key === 'ArrowRight') {
-        this.setValue(Math.min(this.getValue() + timeDeltaS, this.params.maxValue));
+        this.setValue(
+          Math.min(this.getValue() + timeDeltaS, this.params.maxValue)
+        );
       }
       this.keydownTime ++;
-    });
-
-    ['keydown', 'mousedown', 'touchstart'].forEach((eventType) => {
-      this.slider.addEventListener(eventType, (event) => {
-        this.handleSliderStarted(event);
-      });
     });
 
     this.slider.addEventListener('input', (event) => {
