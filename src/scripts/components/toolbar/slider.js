@@ -45,13 +45,10 @@ export default class Slider {
       this.keydownTime ++;
     });
 
-    this.slider.addEventListener('keydown', () => {
-      this.callbacks.onSliderStarted();
-    });
-
-    this.slider.addEventListener('keyup', () => {
-      this.callbacks.onSliderEnded();
-      this.keydownTime = 0;
+    ['keydown', 'mousedown', 'touchstart'].forEach((eventType) => {
+      this.slider.addEventListener(eventType, (event) => {
+        this.handleSliderStarted(event);
+      });
     });
 
     this.slider.addEventListener('input', (event) => {
@@ -60,8 +57,10 @@ export default class Slider {
       this.setValue(currentTime);
     });
 
-    this.slider.addEventListener('mouseup', (event) => {
-      this.callbacks.onSliderEnded();
+    ['keyup', 'mouseup', 'touchend'].forEach((eventType) => {
+      this.slider.addEventListener(eventType, (event) => {
+        this.handleSliderEnded();
+      });
     });
 
     this.dom.append(this.slider);
@@ -119,5 +118,30 @@ export default class Slider {
 
     this.slider.style.background =
       `linear-gradient(to right, var(--color-primary-dark-80) ${percentage}%, var(--color-primary-15) ${percentage}%)`;
+  }
+
+  /**
+   * Handle slider started.
+   * @param {Event} event Event.
+   */
+  handleSliderStarted(event) {
+    if (event instanceof KeyboardEvent) {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.code)) {
+        return;
+      }
+      else {
+        event.preventDefault();
+      }
+    }
+
+    this.callbacks.onSliderStarted();
+  }
+
+  /**
+   * Handle slider ended.
+   */
+  handleSliderEnded() {
+    this.keydownTime = 0;
+    this.callbacks.onSliderEnded();
   }
 }
