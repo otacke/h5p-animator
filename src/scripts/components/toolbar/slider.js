@@ -50,9 +50,7 @@ export default class Slider {
     });
 
     this.slider.addEventListener('input', (event) => {
-      const currentTime = parseFloat(event.target.value);
-      this.callbacks.onSliderSeeked(currentTime);
-      this.setValue(currentTime);
+      this.handleSliderSeeked(parseFloat(this.slider.value));
     });
 
     ['keyup', 'mouseup', 'touchend'].forEach((eventType) => {
@@ -128,11 +126,22 @@ export default class Slider {
         return;
       }
       else {
+        this.handleSliderSeeked(parseFloat(this.slider.value));
         event.preventDefault();
       }
     }
 
     this.callbacks.onSliderStarted();
+  }
+
+  /**
+   * Handle slider seeked.
+   * @param {number} time Time.
+   */
+  handleSliderSeeked(time) {
+    const currentTime = time;
+    this.callbacks.onSliderSeeked(currentTime);
+    this.setValue(currentTime);
   }
 
   /**
