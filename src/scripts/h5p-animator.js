@@ -162,7 +162,7 @@ export default class Animator extends H5P.EventDispatcher {
   retrieveAspectRatio(aspectRatio) {
     if (
       typeof aspectRatio !== 'string' ||
-      !(aspectRatio.match(/^\d+(.\d+)?[:/]\d+(.\d+)?$/))
+      !(aspectRatio.match(/^\d+(.\d+)?([:/]\d+(.\d+)?)?$/))
     ) {
       aspectRatio = Animator.DEFAULT_ASPECT_RATIO;
     }
