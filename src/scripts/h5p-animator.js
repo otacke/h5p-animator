@@ -160,11 +160,20 @@ export default class Animator extends H5P.EventDispatcher {
    * @returns {number} Aspect ratio.
    */
   retrieveAspectRatio(aspectRatio) {
-    if (
-      typeof aspectRatio !== 'string' ||
-      !(aspectRatio.match(/^\d+(.\d+)?([:/]\d+(.\d+)?)?$/))
-    ) {
-      aspectRatio = Animator.DEFAULT_ASPECT_RATIO;
+    if (typeof aspectRatio === 'number') {
+      aspectRatio = aspectRatio.toString();
+    }
+
+    if (typeof aspectRatio !== 'string') {
+      aspectRatio = DEFAULT_ASPECT_RATIO;
+    }
+
+    if (aspectRatio.match(/^\d+(.\d+)?$/)) {
+      aspectRatio = `${aspectRatio}/1`;
+    }
+
+    if (!(aspectRatio.match(/^\d+(.\d+)?[:/]\d+(.\d+)?$/))) {
+      aspectRatio = DEFAULT_ASPECT_RATIO;
     }
 
     const [width, height] = aspectRatio.includes(':') ?
