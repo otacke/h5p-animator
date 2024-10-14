@@ -1,9 +1,7 @@
-@import "@styles/colors";
-
 .h5p-animator-toolbar-tool-bar {
   align-items: center;
-  background-color: $color-background;
-  box-shadow: 10px 10px 30px $color-shadow-light;
+  background-color: var(--color-background);
+  box-shadow: 10px 10px 30px var(--color-shadow-light);
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -30,7 +28,7 @@
   }
 
   .toolbar-button {
-    color: $color-primary-dark;
+    color: var(--color-primary-dark);
     position: relative;
     flex-shrink: 0;
 
@@ -50,7 +48,7 @@
 
       &.toolbar-button-active {
         &:not(.toolbar-button-disabled) {
-          background-color: $color-primary-5;
+          background-color: var(--color-primary-5);
         }
 
         &::before {

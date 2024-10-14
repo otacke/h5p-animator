@@ -1,5 +1,3 @@
-@import "@styles/colors";
-
 .h5p-animator-time-display {
   display: flex;
   flex-direction: row;
@@ -7,7 +5,7 @@
   padding: 0 0.25rem;
 
   .h5p-animator-time-display-current {
-    color: $color-primary-dark;
+    color: var(--color-primary-dark);
   }
 
   .h5p-animator-time-display-separator {
@@ -15,7 +13,7 @@
   }
 
   .h5p-animator-time-display-max {
-    color: $color-text;
+    color: var(--color-text);
   }
 
   &.display-none {
