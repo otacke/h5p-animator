@@ -156,11 +156,6 @@ export default class AnimatorMain {
    * Handle play/pause request by user.
    */
   handlePlayPause() {
-    if (this.currentTime >= millisecondsToSeconds(this.duration)) {
-      this.stop();
-      return;
-    }
-
     if (this.isPlayingState) {
       this.stop();
     }
@@ -194,7 +189,7 @@ export default class AnimatorMain {
    */
   start() {
     if (this.currentTime >= millisecondsToSeconds(this.duration)) {
-      return;
+      this.currentTime = 0;
     }
 
     this.lastTickMS = Date.now();
