@@ -87,6 +87,7 @@ export default class Timeline {
 
   /**
    * Merge animations that should start at the same time.
+   * Note: anime.js does not overlap animations properly!
    * @param {object[]} animations Array of animation parameters.
    * @returns {object[]} Merged animations.
    */
@@ -101,7 +102,10 @@ export default class Timeline {
       else {
         let previousAnimation = acc[acc.length - 1];
         if (animation.targets === previousAnimation.targets) {
-          return acc; // Currently cannot merge animations with same targets
+          Object.keys(animation).forEach((key) => {
+            previousAnimation[key] = animation[key];
+          });
+          return acc;
         }
         else {
           animation.timeOffset = `-=${previousAnimation.duration}`;
@@ -114,7 +118,7 @@ export default class Timeline {
   }
 
   /**
-   * Get duration of thie element's timeline.
+   * Get duration timeline.
    * @returns {number} Duration in milliseconds.
    */
   getDuration() {
