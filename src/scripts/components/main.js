@@ -194,8 +194,6 @@ export default class AnimatorMain {
    */
   start() {
     if (this.currentTime >= millisecondsToSeconds(this.duration)) {
-      console.log('Cannot start animation after it has ended.');
-
       return;
     }
 
