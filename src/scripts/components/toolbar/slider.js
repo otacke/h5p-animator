@@ -1,5 +1,5 @@
 import Util from '@services/util.js';
-import TimeUtil from '@services/time-util.js';
+import { toHumanTime } from '@services/time-util.js';
 import './slider.scss';
 
 export default class Slider {
@@ -107,9 +107,10 @@ export default class Slider {
     this.slider.setAttribute('aria-valuenow', value);
     this.slider.setAttribute(
       'aria-valuetext',
-      TimeUtil.toHumanTime(value, { timeLabels: this.params.timeLabels })
+      toHumanTime(value, { timeLabels: this.params.timeLabels })
     );
 
+    // eslint-disable-next-line no-magic-numbers
     const percentage = (value / this.params.maxValue) * 100;
 
     this.slider.style.background =

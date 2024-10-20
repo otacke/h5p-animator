@@ -8,35 +8,6 @@
     "widget": "animator",
     "fields": [
       {
-        "name": "background",
-        "type": "group",
-        "label": "Background",
-        "fields": [
-          {
-            "name": "backgroundColor",
-            "type": "text",
-            "label": "Background color",
-            "optional": true,
-            "description": "Select a color for the background.",
-            "default": "rgba(255, 255, 255, 0)",
-            "widget": "colorSelector",
-            "spectrum": {
-              "showInput": true,
-              "showInitial": true,
-              "showAlpha": true,
-              "preferredFormat": "rgb"
-            }
-          },
-          {
-            "name": "backgroundImage",
-            "type": "image",
-            "label": "Background image",
-            "optional": true,
-            "description": "Select an image to use as the background."
-          }
-        ]
-      },
-      {
         "name": "elements",
         "type": "list",
         "label": "Elements",
@@ -48,6 +19,12 @@
           "type": "group",
           "label": "Element",
           "fields": [
+            {
+              "name": "id",
+              "type": "text",
+              "label": "Id",
+              "widget": "none"
+            },
             {
               "name": "contentType",
               "type": "library",
@@ -62,287 +39,326 @@
             {
               "name": "x",
               "type": "text",
-              "label": "x"
+              "label": "x",
+              "widget": "none"
             },
             {
               "name": "y",
               "type": "text",
-              "label": "y"
+              "label": "y",
+              "widget": "none"
             },
             {
               "name": "width",
               "type": "text",
-              "label": "Width"
+              "label": "Width",
+              "widget": "none"
             },
             {
               "name": "height",
               "type": "text",
-              "label": "Height"
-            },
-            {
-              "name": "animations",
-              "type": "list",
-              "label": "Animations",
-              "entity": "animation",
-              "field": {
-                "name": "animation",
-                "type": "group",
-                "label": "Animation",
-                "fields": [
-                  {
-                    "name": "effect",
-                    "type": "select",
-                    "label": "Effect",
-                    "options": [
-                      {
-                        "value": "flyIn",
-                        "label": "Fly in"
-                      },
-                      {
-                        "value": "fadeIn",
-                        "label": "Fade in"
-                      },
-                      {
-                        "value": "zoomIn",
-                        "label": "Zoom in"
-                      },
-                      {
-                        "value": "rotate",
-                        "label": "Rotate"
-                      },
-                      {
-                        "value": "pulse",
-                        "label": "Pulse"
-                      },
-                      {
-                        "value": "shakeX",
-                        "label": "Shake horizontally"
-                      },
-                      {
-                        "value": "shakeY",
-                        "label": "Shake vertically"
-                      },
-                      {
-                        "value": "wobble",
-                        "label": "Wobble"
-                      },
-                      {
-                        "value": "flyOut",
-                        "label": "Fly out"
-                      },
-                      {
-                        "value": "fadeOut",
-                        "label": "Fade out"
-                      },
-                      {
-                        "value": "zoomOut",
-                        "label": "Zoom out"
-                      }
-                    ],
-                    "default": "flyIn"
-                  },
-                  {
-                    "name": "flyInDirection",
-                    "type": "select",
-                    "label": "Direction",
-                    "options": [
-                      {
-                        "value": "fromLeft",
-                        "label": "From left"
-                      },
-                      {
-                        "value": "fromRight",
-                        "label": "From right"
-                      },
-                      {
-                        "value": "fromTop",
-                        "label": "From top"
-                      },
-                      {
-                        "value": "fromBottom",
-                        "label": "From bottom"
-                      },
-                      {
-                        "value": "fromTopLeft",
-                        "label": "From top left"
-                      },
-                      {
-                        "value": "fromTopRight",
-                        "label": "From top right"
-                      },
-                      {
-                        "value": "fromBottomLeft",
-                        "label": "From bottom left"
-                      },
-                      {
-                        "value": "fromBottomRight",
-                        "label": "From bottom right"
-                      }
-                    ],
-                    "default": "fromLeft",
-                    "optional": true,
-                    "widget": "showWhen",
-                    "showWhen": {
-                      "rules": [
-                        {
-                          "field": "effect",
-                          "equals": "flyIn"
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    "name": "rotate",
-                    "type": "number",
-                    "label": "Rotation angle",
-                    "optional": true,
-                    "widget": "showWhen",
-                    "showWhen": {
-                      "rules": [
-                        {
-                          "field": "effect",
-                          "equals": "rotate"
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    "name": "translateX",
-                    "type": "text",
-                    "label": "Distance horizontally",
-                    "optional": true,
-                    "widget": "showWhen",
-                    "showWhen": {
-                      "rules": [
-                        {
-                          "field": "effect",
-                          "equals": "translate"
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    "name": "translateY",
-                    "type": "text",
-                    "label": "Distance vertically",
-                    "optional": true,
-                    "widget": "showWhen",
-                    "showWhen": {
-                      "rules": [
-                        {
-                          "field": "effect",
-                          "equals": "translate"
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    "name": "flyOutDirection",
-                    "type": "select",
-                    "label": "Direction",
-                    "options": [
-                      {
-                        "value": "toLeft",
-                        "label": "To left"
-                      },
-                      {
-                        "value": "toRight",
-                        "label": "To right"
-                      },
-                      {
-                        "value": "toTop",
-                        "label": "To top"
-                      },
-                      {
-                        "value": "toBottom",
-                        "label": "To bottom"
-                      },
-                      {
-                        "value": "toTopLeft",
-                        "label": "To top left"
-                      },
-                      {
-                        "value": "toTopRight",
-                        "label": "To top right"
-                      },
-                      {
-                        "value": "toBottomLeft",
-                        "label": "To bottom left"
-                      },
-                      {
-                        "value": "toBottomRight",
-                        "label": "To bottom right"
-                      }
-                    ],
-                    "default": "toLeft",
-                    "optional": true,
-                    "widget": "showWhen",
-                    "showWhen": {
-                      "rules": [
-                        {
-                          "field": "effect",
-                          "equals": "flyOut"
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    "name": "startWith",
-                    "type": "select",
-                    "label": "Start with",
-                    "options": [
-                      {
-                        "value": "withPrevious",
-                        "label": "With previous"
-                      },
-                      {
-                        "value": "afterPrevious",
-                        "label": "After previous"
-                      }
-                    ],
-                    "default": "afterPrevious"
-                  },
-                  {
-                    "name": "delay",
-                    "type": "text",
-                    "label": "Delay",
-                    "default": "0"
-                  },
-                  {
-                    "name": "duration",
-                    "type": "text",
-                    "label": "Duration",
-                    "default": "1"
-                  },
-                  {
-                    "name": "easing",
-                    "label": "Easing",
-                    "type": "select",
-                    "options": [
-                      {
-                        "value": "linear",
-                        "label": "Linear"
-                      },
-                      {
-                        "value": "easeInQuad",
-                        "label": "Ease-in"
-                      },
-                      {
-                        "value": "easeOutQuad",
-                        "label": "Ease-out"
-                      },
-                      {
-                        "value": "easeInOutQuad",
-                        "label": "Ease-in-out"
-                      }
-                    ],
-                    "default": "linear"
-                  }
-                ]
-              }
+              "label": "Height",
+              "widget": "none"
             }
           ]
         }
+      },
+      {
+        "name": "animations",
+        "type": "list",
+        "label": "Animations",
+        "entity": "animation",
+        "field": {
+          "name": "animation",
+          "type": "group",
+          "label": "Animation",
+          "fields": [
+            {
+              "name": "subContentId",
+              "type": "text",
+              "label": "subContentId",
+              "widget": "none"
+            },
+            {
+              "name": "effect",
+              "type": "select",
+              "label": "Effect",
+              "options": [
+                {
+                  "value": "flyIn",
+                  "label": "Fly in"
+                },
+                {
+                  "value": "fadeIn",
+                  "label": "Fade in"
+                },
+                {
+                  "value": "zoomIn",
+                  "label": "Zoom in"
+                },
+                {
+                  "value": "rotate",
+                  "label": "Rotate"
+                },
+                {
+                  "value": "pulse",
+                  "label": "Pulse"
+                },
+                {
+                  "value": "shakeX",
+                  "label": "Shake horizontally"
+                },
+                {
+                  "value": "shakeY",
+                  "label": "Shake vertically"
+                },
+                {
+                  "value": "wobble",
+                  "label": "Wobble"
+                },
+                {
+                  "value": "flyOut",
+                  "label": "Fly out"
+                },
+                {
+                  "value": "fadeOut",
+                  "label": "Fade out"
+                },
+                {
+                  "value": "zoomOut",
+                  "label": "Zoom out"
+                }
+              ],
+              "default": "flyIn"
+            },
+            {
+              "name": "flyInDirection",
+              "type": "select",
+              "label": "Direction",
+              "options": [
+                {
+                  "value": "fromLeft",
+                  "label": "From left"
+                },
+                {
+                  "value": "fromRight",
+                  "label": "From right"
+                },
+                {
+                  "value": "fromTop",
+                  "label": "From top"
+                },
+                {
+                  "value": "fromBottom",
+                  "label": "From bottom"
+                },
+                {
+                  "value": "fromTopLeft",
+                  "label": "From top left"
+                },
+                {
+                  "value": "fromTopRight",
+                  "label": "From top right"
+                },
+                {
+                  "value": "fromBottomLeft",
+                  "label": "From bottom left"
+                },
+                {
+                  "value": "fromBottomRight",
+                  "label": "From bottom right"
+                }
+              ],
+              "default": "fromLeft",
+              "optional": true,
+              "widget": "showWhen",
+              "showWhen": {
+                "rules": [
+                  {
+                    "field": "effect",
+                    "equals": "flyIn"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "rotate",
+              "type": "number",
+              "label": "Rotation angle",
+              "optional": true,
+              "widget": "showWhen",
+              "showWhen": {
+                "rules": [
+                  {
+                    "field": "effect",
+                    "equals": "rotate"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "translateX",
+              "type": "text",
+              "label": "Distance horizontally",
+              "optional": true,
+              "widget": "showWhen",
+              "showWhen": {
+                "rules": [
+                  {
+                    "field": "effect",
+                    "equals": "translate"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "translateY",
+              "type": "text",
+              "label": "Distance vertically",
+              "optional": true,
+              "widget": "showWhen",
+              "showWhen": {
+                "rules": [
+                  {
+                    "field": "effect",
+                    "equals": "translate"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "flyOutDirection",
+              "type": "select",
+              "label": "Direction",
+              "options": [
+                {
+                  "value": "toLeft",
+                  "label": "To left"
+                },
+                {
+                  "value": "toRight",
+                  "label": "To right"
+                },
+                {
+                  "value": "toTop",
+                  "label": "To top"
+                },
+                {
+                  "value": "toBottom",
+                  "label": "To bottom"
+                },
+                {
+                  "value": "toTopLeft",
+                  "label": "To top left"
+                },
+                {
+                  "value": "toTopRight",
+                  "label": "To top right"
+                },
+                {
+                  "value": "toBottomLeft",
+                  "label": "To bottom left"
+                },
+                {
+                  "value": "toBottomRight",
+                  "label": "To bottom right"
+                }
+              ],
+              "default": "toLeft",
+              "optional": true,
+              "widget": "showWhen",
+              "showWhen": {
+                "rules": [
+                  {
+                    "field": "effect",
+                    "equals": "flyOut"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "startWith",
+              "type": "select",
+              "label": "Start with",
+              "options": [
+                {
+                  "value": "withPrevious",
+                  "label": "With previous"
+                },
+                {
+                  "value": "afterPrevious",
+                  "label": "After previous"
+                }
+              ],
+              "default": "afterPrevious"
+            },
+            {
+              "name": "delay",
+              "type": "text",
+              "label": "Delay",
+              "default": "0"
+            },
+            {
+              "name": "duration",
+              "type": "text",
+              "label": "Duration",
+              "default": "1"
+            },
+            {
+              "name": "easing",
+              "label": "Easing",
+              "type": "select",
+              "options": [
+                {
+                  "value": "linear",
+                  "label": "Linear"
+                },
+                {
+                  "value": "easeInQuad",
+                  "label": "Ease-in"
+                },
+                {
+                  "value": "easeOutQuad",
+                  "label": "Ease-out"
+                },
+                {
+                  "value": "easeInOutQuad",
+                  "label": "Ease-in-out"
+                }
+              ],
+              "default": "linear"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "background",
+    "type": "group",
+    "label": "Background",
+    "fields": [
+      {
+        "name": "backgroundColor",
+        "type": "text",
+        "label": "Background color",
+        "optional": true,
+        "description": "Select a color for the background.",
+        "default": "rgba(255, 255, 255, 1)",
+        "widget": "colorSelector",
+        "spectrum": {
+          "showInput": true,
+          "showInitial": true,
+          "showAlpha": true,
+          "preferredFormat": "rgb"
+        }
+      },
+      {
+        "name": "backgroundImage",
+        "type": "image",
+        "label": "Background image",
+        "optional": true,
+        "description": "Select an image to use as the background."
       }
     ]
   },
@@ -376,7 +392,7 @@
         "type": "text",
         "label": "Aspect ratio",
         "description": "Select the aspect ratio for the animation.",
-        "default": "16:9"
+        "default": "16/9"
       },
       {
         "name": "hideControls",
@@ -392,13 +408,6 @@
     "label": "User interface",
     "common": true,
     "fields": [
-      {
-        "name": "sample",
-        "type": "text",
-        "label": "Sample entry for visible user interface strings",
-        "description": "This is just a sample entry for visible user interface strings.",
-        "default": "Sample l10n"
-      },
       {
         "name": "dummy",
         "type": "text",

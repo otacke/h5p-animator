@@ -3,6 +3,9 @@ import CanvasElement from './canvas-element.js';
 
 import './canvas.scss';
 
+/** @constant {number} BASE_FONT_SIZE Base font size. */
+const BASE_FONT_SIZE_PX = 16;
+
 export default class Canvas {
   /**
    * @class
@@ -33,7 +36,6 @@ export default class Canvas {
 
     this.elements = params.elements.map((element) => {
       return new CanvasElement({
-        animations: element.animations,
         contentType: element.contentType,
         geometry: element.geometry,
         globals: params.globals
@@ -54,42 +56,6 @@ export default class Canvas {
   }
 
   /**
-   * Play animation.
-   */
-  play() {
-    this.elements.forEach((element) => {
-      element.play();
-    });
-  }
-
-  /**
-   * Pause animation.
-   */
-  pause() {
-    this.elements.forEach((element) => {
-      element.pause();
-    });
-  }
-
-  /**
-   * Seek to a specific time.
-   * @param {number} timeMs Time in milliseconds.
-   */
-  seek(timeMs) {
-    this.elements.forEach((element) => {
-      element.seek(timeMs);
-    });
-  }
-
-  /**
-   * Get total duration.
-   * @returns {number} Total duration in milliseconds.
-   */
-  getDuration() {
-    return Math.max(...this.elements.map((element) => element.getDuration()));
-  }
-
-  /**
    * Resize.
    * @param {object} [params] Parameters.
    * @param {number} [params.sizeFactor] Size factor.
@@ -98,7 +64,7 @@ export default class Canvas {
     if (params.sizeFactor) {
       // Using same logic and values as CoursePresentation to scale text.
       this.dom.style.fontSize =
-      `${CanvasElement.BASE_FONT_SIZE_PX * params.sizeFactor}px`;
+      `${BASE_FONT_SIZE_PX * params.sizeFactor}px`;
     }
 
     this.dom.style.setProperty(
@@ -106,6 +72,3 @@ export default class Canvas {
     );
   }
 }
-
-/** @constant {number} BASE_FONT_SIZE Base font size. */
-CanvasElement.BASE_FONT_SIZE_PX = 16;

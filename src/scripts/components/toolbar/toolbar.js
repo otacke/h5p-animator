@@ -4,6 +4,12 @@ import TimeDisplay from './time-display.js';
 import Util from '@services/util.js';
 import './toolbar.scss';
 
+/** @constant {number} BREAKPOINT_HIDE_TIME_DISPLAY Breakpoint to hide time display */
+const BREAKPOINT_HIDE_TIME_DISPLAY = 320;
+
+/** @constant {number} DEFAULT_DISPLAY_TIME_MS Default display time */
+const DEFAULT_DISPLAY_TIME_MS = 3000;
+
 /** Class representing the button bar */
 export default class Toolbar {
 
@@ -115,10 +121,7 @@ export default class Toolbar {
       this.dom.classList.add('absolute');
 
       // iOS is behind ... Again ...
-      const idleCallback = window.requestIdleCallback ?
-        window.requestIdleCallback :
-        window.requestAnimationFrame;
-
+      const idleCallback = window.requestIdleCallback ?? window.requestAnimationFrame;
       idleCallback(() => {
         // Get started once visible and ready
         const observer = new IntersectionObserver((entries) => {
@@ -161,7 +164,7 @@ export default class Toolbar {
     // Could be done with a CSS container query once support is better
     this.timeDisplay.getDOM().classList.toggle(
       'display-none',
-      this.dom.offsetWidth < Toolbar.BREAKPOINT_HIDE_TIME_DISPLAY
+      this.dom.offsetWidth < BREAKPOINT_HIDE_TIME_DISPLAY
     );
   }
 
@@ -228,7 +231,7 @@ export default class Toolbar {
    * Display toolbar temporarily, then turn transparent.
    * @param {number} [durationMs] Duration for showing.
    */
-  displayTemporarily(durationMs = Toolbar.DEFAULT_DISPLAY_TIME_MS) {
+  displayTemporarily(durationMs = DEFAULT_DISPLAY_TIME_MS) {
     this.dom.classList.remove('transparent');
     window.setTimeout(() => {
       this.dom.classList.add('transparent');
@@ -266,9 +269,3 @@ export default class Toolbar {
     this.timeDisplay.setTime(value);
   }
 }
-
-/** @constant {number} BREAKPOINT_HIDE_TIME_DISPLAY Breakpoint to hide time display */
-Toolbar.BREAKPOINT_HIDE_TIME_DISPLAY = 320;
-
-/** @constant {number} DEFAULT_DISPLAY_TIME_MS Default display time */
-Toolbar.DEFAULT_DISPLAY_TIME_MS = 3000;

@@ -1,7 +1,15 @@
 import Util from '@services/util.js';
 import Canvas from '@components/canvas/canvas.js';
 import Toolbar from '@components/toolbar/toolbar.js';
+import Timeline from '@models/timeline.js';
 import Jukebox from '@services/jukebox.js';
+import { MS_IN_S, secondsToMilliseconds, millisecondsToSeconds } from '@services/time-util.js';
+
+/** @constant {number} FRAMES_PER_SECOND Frames per second aspired. */
+const FRAMES_PER_SECOND = 25;
+
+/** @constant {number} UPDATE_INTERVAL_MS Update interval in milliseconds. */
+const UPDATE_INTERVAL_MS = MS_IN_S / FRAMES_PER_SECOND;
 
 export default class AnimatorMain {
   /**
@@ -46,13 +54,32 @@ export default class AnimatorMain {
       {}
     );
 
-    this.duration = this.canvas.getDuration();
+    const elementsLookup = this.canvas.elements.reduce((acc, element) => {
+      const subContentId = element.getSubContentId();
+      if (!subContentId) {
+        return acc;
+      }
+
+      acc[element.getSubContentId()] = {
+        dom: element.getDOM(),
+        geometry: element.getGeometry()
+      };
+
+      return acc;
+    }, {});
+
+    this.timeline = new Timeline({
+      animations: this.params.animations,
+      elementsLookup: elementsLookup
+    });
+
+    this.duration = this.timeline.getDuration();
 
     this.toolbar = new Toolbar(
       {
         dictionary: this.params.dictionary,
         globals: this.params.globals,
-        maxTime: this.duration / 1000,
+        maxTime: millisecondsToSeconds(this.duration),
         hideControls: this.params.hideControls
       },
       {
@@ -63,7 +90,7 @@ export default class AnimatorMain {
         onSliderSeeked: (value) => {
           this.currentTime = value;
           this.toolbar.setTimeDisplayValue(this.currentTime);
-          this.canvas.seek(this.currentTime * 1000);
+          this.timeline.seek(secondsToMilliseconds(this.currentTime));
         },
         onSliderEnded: () => {
           if (this.continueState) {
@@ -129,7 +156,7 @@ export default class AnimatorMain {
    * Handle play/pause request by user.
    */
   handlePlayPause() {
-    if (this.currentTime >= this.duration / 1000) {
+    if (this.currentTime >= millisecondsToSeconds(this.duration)) {
       this.stop();
       return;
     }
@@ -156,7 +183,7 @@ export default class AnimatorMain {
       this.toolbar.forceButton('play', false, { noCallback: true });
     }
 
-    this.canvas.pause();
+    this.timeline.pause();
     if (this.hasAudio) {
       this.jukebox.stop('background');
     }
@@ -166,7 +193,9 @@ export default class AnimatorMain {
    * Start animation.
    */
   start() {
-    if (this.currentTime >= this.duration / 1000) {
+    if (this.currentTime >= millisecondsToSeconds(this.duration)) {
+      console.log('Cannot start animation after it has ended.');
+
       return;
     }
 
@@ -175,8 +204,8 @@ export default class AnimatorMain {
     // Ensure that all timelines are synced with global time
     this.isPlayingState = true;
 
-    this.canvas.seek(this.currentTime * 1000);
-    this.canvas.play();
+    this.timeline.seek(secondsToMilliseconds(this.currentTime));
+    this.timeline.play();
     if (this.hasAudio) {
       this.jukebox.play('background', this.currentTime);
     }
@@ -189,19 +218,20 @@ export default class AnimatorMain {
    */
   update() {
     const nowMS = Date.now();
-    const secondsPassed = (nowMS - this.lastTickMS) / 1000;
+    const secondsPassed = millisecondsToSeconds(nowMS - this.lastTickMS);
     this.lastTickMS = nowMS;
 
     this.currentTime = this.currentTime + secondsPassed;
 
-    if (this.currentTime > this.duration / 1000) {
-      this.canvas.seek(this.duration / 1000);
-      this.toolbar.setSliderValue(this.duration / 1000);
-      this.toolbar.setTimeDisplayValue(this.duration / 1000);
+    const durattionS = millisecondsToSeconds(this.duration);
+    if (this.currentTime > durattionS) {
+      this.toolbar.setSliderValue(durattionS);
+      this.toolbar.setTimeDisplayValue(durattionS);
 
       if (this.params.hideControls) {
         this.toolbar.displayTemporarily();
       }
+
       this.stop();
       return;
     }
@@ -212,7 +242,7 @@ export default class AnimatorMain {
     window.clearTimeout(this.updateTimeout);
     this.updateTimeout = window.setTimeout(() => {
       this.update();
-    }, 40); // 25fps
+    }, UPDATE_INTERVAL_MS);
   }
 
   /**

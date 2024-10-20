@@ -5,7 +5,23 @@ import Globals from '@services/globals.js';
 import AnimatorMain from '@components/main.js';
 import '@styles/h5p-animator.scss';
 
+/** @constant {string} DEFAULT_DESCRIPTION Default description */
+const DEFAULT_DESCRIPTION = 'Animator';
+
+/** @constant {string} DEFAULT_ASPECT_RATIO Default aspect ratio */
+const DEFAULT_ASPECT_RATIO = '16:9';
+
+/** @constant {number} BASE_WIDTH_PX Base width for font size computation. */
+const BASE_WIDTH_PX = 640;
+
+/** @constant {number} FULLSCREEN_DELAY_MS Delay for going to fullscreen. */
+const FULLSCREEN_DELAY_MS = 300;
+
+/** @constant {number} FULLSCREEN_RESIZE_DELAY_MS Delay before resizing after exiting fullscreen. */
+const FULLSCREEN_RESIZE_DELAY_MS = 50;
+
 export default class Animator extends H5P.EventDispatcher {
+
   /**
    * @class
    * @param {object} params Parameters passed by the editor.
@@ -18,19 +34,17 @@ export default class Animator extends H5P.EventDispatcher {
     const defaults = Util.extend({
       editor: {
         background: {},
-        elements: []
+        elements: [],
+        animations: []
       },
       audio: {},
       behaviour: {
-        aspectRatio: Animator.DEFAULT_ASPECT_RATIO
+        aspectRatio: DEFAULT_ASPECT_RATIO
       }
     }, H5PUtil.getSemanticsDefaults());
 
     // Sanitize parameters
     this.params = Util.extend(defaults, params);
-
-    this.params.editor.elements =
-      this.retrieveElements(this.params.editor.elements);
 
     this.contentId = contentId;
     this.extras = extras;
@@ -56,16 +70,17 @@ export default class Animator extends H5P.EventDispatcher {
 
     this.main = new AnimatorMain(
       {
+        animations: this.retrieveAnimations(this.params.editor.animations),
         aspectRatio: this.retrieveAspectRatio(this.params.behaviour.aspectRatio),
-        backgroundColor: this.params.editor.background.backgroundColor,
+        audio: this.params.audio,
+        backgroundColor: this.params.background.backgroundColor,
         backgroundImage: this.retrieveBackgroundImage(
-          this.params.editor.background.backgroundImage?.path, this.contentId
+          this.params.background.backgroundImage?.path, this.contentId
         ),
-        elements: this.params.editor.elements,
+        elements: this.retrieveElements(this.params.editor.elements),
         dictionary: this.dictionary,
         globals: this.globals,
-        hideControls: this.params.behaviour.hideControls,
-        audio: this.params.audio
+        hideControls: this.params.behaviour.hideControls
       },
       {
         onFullscreenClicked: () => {
@@ -90,8 +105,7 @@ export default class Animator extends H5P.EventDispatcher {
     this.wrapper.classList.add('h5p-animator');
     this.wrapper.appendChild(this.dom);
 
-    this.baseWidth = parseInt(this.wrapper.style.width ?? '0') ||
-      Animator.BASE_WIDTH_PX;
+    this.baseWidth = parseInt(this.wrapper.style.width ?? '0') || BASE_WIDTH_PX;
 
     this.on('resize', () => {
       this.resize();
@@ -119,7 +133,6 @@ export default class Animator extends H5P.EventDispatcher {
   retrieveElements(elements = []) {
     return elements
       .map((element) => ({
-        animations: element.animations ?? [],
         contentType: element.contentType,
         geometry: {
           x: parseFloat(element.x),
@@ -135,6 +148,39 @@ export default class Animator extends H5P.EventDispatcher {
         !Number.isNaN(element.geometry.width) &&
         !Number.isNaN(element.geometry.height)
       );
+  }
+
+  /**
+   * Retrieve animations with basic sanitization.
+   * @param {object[]} [animations] Animations.
+   * @returns {object[]} Valid animations.
+   */
+  retrieveAnimations(animations = []) {
+    animations = animations
+      .map((animation) => {
+        if (typeof animation !== 'object' || animation === null) {
+          return null;
+        }
+
+        animation = Util.extend({
+          delay: '0',
+          duration: '1',
+          easing: 'linear',
+          startWith: 'afterPrevious'
+        }, animation);
+
+        animation.delay = parseFloat(animation.delay);
+        animation.duration = parseFloat(animation.duration);
+
+        return animation;
+      })
+      .filter((animation) => animation !== null)
+      .filter((animation) =>
+        !Number.isNaN(animation.delay) &&
+        !Number.isNaN(animation.duration)
+      );
+
+    return animations ?? [];
   }
 
   /**
@@ -189,7 +235,7 @@ export default class Animator extends H5P.EventDispatcher {
   handleFullscreenClicked() {
     setTimeout(() => {
       this.toggleFullscreen();
-    }, 300); // Some devices don't register user gesture before call to to requestFullscreen
+    }, FULLSCREEN_DELAY_MS); // Some devices don't register user gesture before call to to requestFullscreen
   }
 
   /**
@@ -232,7 +278,7 @@ export default class Animator extends H5P.EventDispatcher {
   triggerResizeAfterFullscreen() {
     window.setTimeout(() => {
       this.trigger('resize');
-    }, 50);
+    }, FULLSCREEN_RESIZE_DELAY_MS);
   }
 
   /**
@@ -242,7 +288,7 @@ export default class Animator extends H5P.EventDispatcher {
   getTitle() {
     // H5P Core function: createTitle
     return H5P.createTitle(
-      this.extras?.metadata?.title || Animator.DEFAULT_DESCRIPTION
+      this.extras?.metadata?.title || DEFAULT_DESCRIPTION
     );
   }
 
@@ -251,15 +297,6 @@ export default class Animator extends H5P.EventDispatcher {
    * @returns {string} Description.
    */
   getDescription() {
-    return Animator.DEFAULT_DESCRIPTION;
+    return DEFAULT_DESCRIPTION;
   }
 }
-
-/** @constant {string} DEFAULT_DESCRIPTION Default description */
-Animator.DEFAULT_DESCRIPTION = 'Animator';
-
-/** @constant {string} DEFAULT_ASPECT_RATIO Default aspect ratio */
-Animator.DEFAULT_ASPECT_RATIO = '16:9';
-
-/** @constant {number} BASE_WIDTH_PX Base width for font size computation. */
-Animator.BASE_WIDTH_PX = 640;

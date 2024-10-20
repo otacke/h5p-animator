@@ -1,5 +1,5 @@
 import Util from '@services/util.js';
-import TimeUtil from '@services/time-util.js';
+import { toTimecode } from '@services/time-util.js';
 import './time-display.scss';
 
 export default class TimeDisplay {
@@ -30,9 +30,7 @@ export default class TimeDisplay {
 
     const maxTime = document.createElement('div');
     maxTime.classList.add('h5p-animator-time-display-max');
-    maxTime.textContent = TimeUtil.toTimecode(
-      this.params.maxTime, { padMinutes: true }
-    );
+    maxTime.textContent = toTimecode(this.params.maxTime, { padMinutes: true });
     this.dom.append(maxTime);
 
     this.setTime(this.params.currentTime);
@@ -52,7 +50,7 @@ export default class TimeDisplay {
    */
   setTime(time) {
     if (typeof time === 'number') {
-      time = TimeUtil.toTimecode(time, { padMinutes: true });
+      time = toTimecode(time, { padMinutes: true });
     }
 
     this.currentTime.textContent = time;
