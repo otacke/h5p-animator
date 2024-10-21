@@ -403,21 +403,6 @@
     ]
   },
   {
-    "name": "l10n",
-    "type": "group",
-    "label": "User interface",
-    "common": true,
-    "fields": [
-      {
-        "name": "dummy",
-        "type": "text",
-        "label": "Dummy",
-        "default": "Dummy",
-        "widget": "none"
-      }
-    ]
-  },
-  {
     "name": "a11y",
     "type": "group",
     "label": "Accessibility texts",
