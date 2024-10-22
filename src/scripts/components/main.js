@@ -131,6 +131,14 @@ export default class AnimatorMain {
   }
 
   /**
+   * Reset.
+   */
+  reset() {
+    this.stop();
+    this.timeline.seek(0);
+  }
+
+  /**
    * Resize
    * @param {object} [params] Parameters.
    */

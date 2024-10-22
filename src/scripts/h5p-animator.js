@@ -64,7 +64,6 @@ export default class Animator extends H5P.EventDispatcher {
       this.trigger('resize');
     });
 
-
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-animator-content');
 
@@ -298,5 +297,12 @@ export default class Animator extends H5P.EventDispatcher {
    */
   getDescription() {
     return DEFAULT_DESCRIPTION;
+  }
+
+  /**
+   * Reset.
+   */
+  resetTask() {
+    this.main.reset();
   }
 }
