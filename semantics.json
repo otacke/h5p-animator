@@ -37,6 +37,13 @@
               ]
             },
             {
+              "name": "hidden",
+              "type": "boolean",
+              "label": "Hidden",
+              "default": false,
+              "widget": "none"
+            },
+            {
               "name": "x",
               "type": "text",
               "label": "x",
