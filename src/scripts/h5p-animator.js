@@ -189,11 +189,13 @@ export default class Animator extends H5P.EventDispatcher {
    * @returns {string} Image source.
    */
   retrieveBackgroundImage(path, contentId) {
-    if (typeof path !== 'string' || !contentId) {
+    if (typeof path !== 'string') {
       return '';
     }
 
     const image = new Image();
+
+    contentId = window.H5PEditor?.filesPath ? undefined : contentId;
     H5P.setSource(image, { path: path }, contentId);
 
     return image.src ?? '';
