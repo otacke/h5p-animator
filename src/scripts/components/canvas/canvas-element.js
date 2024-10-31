@@ -22,7 +22,7 @@ export default class CanvasElement {
       this.params.contentType.params.visuals.disableFullscreen = true;
     }
 
-    const contentId = window.H5PEditor?.filesPath ? undefined : this.params.globals.get('contentId');
+    const contentId = this.params.globals.get('contentId');
     this.instance = H5P.newRunnable(
       this.params.contentType,
       contentId,
