@@ -90,9 +90,7 @@ export default class AnimatorMain {
           this.stop({ keepState: true });
         },
         onSliderSeeked: (value) => {
-          this.currentTime = value;
-          this.toolbar.setTimeDisplayValue(this.currentTime);
-          this.timeline.seek(secondsToMilliseconds(this.currentTime));
+          this.handleSliderSeeked(value);
         },
         onSliderEnded: () => {
           if (this.continueState) {
@@ -120,6 +118,18 @@ export default class AnimatorMain {
       this.dom.append(this.canvas.getDOM());
       this.dom.append(this.toolbar.getDOM());
     }
+
+    document.body.addEventListener('keydown', (event) => {
+      if (event.key === 'j') {
+        this.handleSliderSeeked(this.currentTime - 1, true);
+      }
+      else if (event.key === 'k') {
+        this.handlePlayPause();
+      }
+      else if (event.key === 'l') {
+        this.handleSliderSeeked(this.currentTime + 1, true);
+      }
+    });
   }
 
   /**
@@ -160,6 +170,22 @@ export default class AnimatorMain {
       sizeFactor: params.sizeFactor,
       ...(maxCanvasHeight && { maxHeight: maxCanvasHeight })
     });
+  }
+
+  /**
+   * Handle slider seeked.
+   * @param {number} value Time in seconds.
+   * @param {boolean} [copyback] If true, copy back the value to the slider.
+   */
+  handleSliderSeeked(value, copyback = false) {
+    value = Math.max(0, Math.min(value, millisecondsToSeconds(this.duration)));
+
+    this.currentTime = value;
+    this.toolbar.setTimeDisplayValue(this.currentTime);
+    if (copyback) {
+      this.toolbar.setSliderValue(this.currentTime);
+    }
+    this.timeline.seek(secondsToMilliseconds(this.currentTime));
   }
 
   /**

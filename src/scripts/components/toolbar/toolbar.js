@@ -268,4 +268,12 @@ export default class Toolbar {
   setTimeDisplayValue(value) {
     this.timeDisplay.setTime(value);
   }
+
+  /**
+   * Set slider value,
+   * @param {number} value Slider value.
+   */
+  setSliderValue(value) {
+    this.slider.setValue(value);
+  }
 }
