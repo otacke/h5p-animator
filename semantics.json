@@ -90,6 +90,7 @@
               "name": "effect",
               "type": "select",
               "label": "Effect",
+              "description": "Select an effect for the animation.",
               "options": [
                 {
                   "value": "flyIn",
@@ -287,6 +288,7 @@
               "name": "startWith",
               "type": "select",
               "label": "Start with",
+              "description": "Select whether the animation should start with the previous animation or after the previous animation.",
               "options": [
                 {
                   "value": "withPrevious",
@@ -303,17 +305,20 @@
               "name": "delay",
               "type": "text",
               "label": "Delay",
+              "description": "Set an optional delay in seconds before the animation starts.",
               "default": "0"
             },
             {
               "name": "duration",
               "type": "text",
               "label": "Duration",
+              "description": "Set the duration of the animation in seconds.",
               "default": "1"
             },
             {
               "name": "easing",
               "label": "Easing",
+              "description": "Select an easing function for the animation.",
               "type": "select",
               "options": [
                 {
