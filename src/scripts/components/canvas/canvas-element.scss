@@ -1,3 +1,7 @@
 .h5p-animator-canvas-element {
   position: absolute;
+
+  &.h5p-advanced-text {
+    color: #000000;
+  }
 }
