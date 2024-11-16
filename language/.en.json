@@ -1,0 +1,287 @@
+{
+  "semantics": [
+    {
+      "label": "Editor",
+      "fields": [
+        {
+          "label": "Elements",
+          "entity": "element",
+          "field": {
+            "label": "Element",
+            "fields": [
+              {
+                "label": "Id"
+              },
+              {
+                "label": "Content type"
+              },
+              {
+                "label": "Hidden"
+              },
+              {
+                "label": "x"
+              },
+              {
+                "label": "y"
+              },
+              {
+                "label": "Width"
+              },
+              {
+                "label": "Height"
+              }
+            ]
+          }
+        },
+        {
+          "label": "Animations",
+          "entity": "animation",
+          "field": {
+            "label": "Animation",
+            "fields": [
+              {
+                "label": "subContentId"
+              },
+              {
+                "label": "Effect",
+                "description": "Select an effect for the animation.",
+                "options": [
+                  {
+                    "label": "Fly in"
+                  },
+                  {
+                    "label": "Fade in"
+                  },
+                  {
+                    "label": "Zoom in"
+                  },
+                  {
+                    "label": "Rotate"
+                  },
+                  {
+                    "label": "Pulse"
+                  },
+                  {
+                    "label": "Shake horizontally"
+                  },
+                  {
+                    "label": "Shake vertically"
+                  },
+                  {
+                    "label": "Wobble"
+                  },
+                  {
+                    "label": "Fly out"
+                  },
+                  {
+                    "label": "Fade out"
+                  },
+                  {
+                    "label": "Zoom out"
+                  }
+                ]
+              },
+              {
+                "label": "Direction",
+                "options": [
+                  {
+                    "label": "From left"
+                  },
+                  {
+                    "label": "From right"
+                  },
+                  {
+                    "label": "From top"
+                  },
+                  {
+                    "label": "From bottom"
+                  },
+                  {
+                    "label": "From top left"
+                  },
+                  {
+                    "label": "From top right"
+                  },
+                  {
+                    "label": "From bottom left"
+                  },
+                  {
+                    "label": "From bottom right"
+                  }
+                ]
+              },
+              {
+                "label": "Rotation angle"
+              },
+              {
+                "label": "Distance horizontally"
+              },
+              {
+                "label": "Distance vertically"
+              },
+              {
+                "label": "Direction",
+                "options": [
+                  {
+                    "label": "To left"
+                  },
+                  {
+                    "label": "To right"
+                  },
+                  {
+                    "label": "To top"
+                  },
+                  {
+                    "label": "To bottom"
+                  },
+                  {
+                    "label": "To top left"
+                  },
+                  {
+                    "label": "To top right"
+                  },
+                  {
+                    "label": "To bottom left"
+                  },
+                  {
+                    "label": "To bottom right"
+                  }
+                ]
+              },
+              {
+                "label": "Start with",
+                "description": "Select whether the animation should start with the previous animation or after the previous animation.",
+                "options": [
+                  {
+                    "label": "With previous"
+                  },
+                  {
+                    "label": "After previous"
+                  }
+                ]
+              },
+              {
+                "label": "Delay",
+                "description": "Set an optional delay in seconds before the animation starts."
+              },
+              {
+                "label": "Duration",
+                "description": "Set the duration of the animation in seconds."
+              },
+              {
+                "label": "Easing",
+                "description": "Select an easing function for the animation.",
+                "options": [
+                  {
+                    "label": "Linear"
+                  },
+                  {
+                    "label": "Ease-in"
+                  },
+                  {
+                    "label": "Ease-out"
+                  },
+                  {
+                    "label": "Ease-in-out"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "label": "Background",
+      "fields": [
+        {
+          "label": "Background color",
+          "description": "Select a color for the background."
+        },
+        {
+          "label": "Background image",
+          "description": "Select an image to use as the background."
+        }
+      ]
+    },
+    {
+      "label": "Audio",
+      "fields": [
+        {
+          "label": "Audio",
+          "description": "Select an audio file to play during the animation."
+        },
+        {
+          "label": "Dummy"
+        }
+      ]
+    },
+    {
+      "label": "Behavioural settings",
+      "fields": [
+        {
+          "label": "Aspect ratio",
+          "description": "Select the aspect ratio for the animation.",
+          "default": "16/9"
+        },
+        {
+          "label": "Hide controls"
+        }
+      ]
+    },
+    {
+      "label": "Accessibility texts",
+      "fields": [
+        {
+          "label": "Play",
+          "default": "Play"
+        },
+        {
+          "label": "Pause",
+          "default": "Pause"
+        },
+        {
+          "label": "Enter fullscreen",
+          "default": "Enter fullscreen mode"
+        },
+        {
+          "label": "Exit fullscreen",
+          "default": "Exit fullscreen mode"
+        },
+        {
+          "label": "Time slider",
+          "default": "Time slider"
+        },
+        {
+          "label": "Hours",
+          "default": "hours"
+        },
+        {
+          "label": "Hour",
+          "default": "hour"
+        },
+        {
+          "label": "Minutes",
+          "default": "minutes"
+        },
+        {
+          "label": "Minute",
+          "default": "minute"
+        },
+        {
+          "label": "Seconds",
+          "default": "seconds"
+        },
+        {
+          "label": "Second",
+          "default": "second"
+        },
+        {
+          "label": "Human time",
+          "description": "Human readable time format. @hours, @minutes, @seconds are placeholders for the actual values. @hourLabel, @minuteLabel, @secondLabel are placeholders for the labels of the values.",
+          "default": "@hours @hourLabel, @minutes @minuteLabel, @seconds @secondLabel"
+        }
+      ]
+    }
+  ]
+}
