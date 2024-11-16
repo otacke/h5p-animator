@@ -52,9 +52,16 @@ export default class Toolbar {
       {
         onClick: () => {
           this.callbacks.onPlayClicked();
+        },
+        onFocus: () => {
+          this.handleChildGotFocus();
+        },
+        onBlur: () => {
+          this.handleChildLostFocus();
         }
       }
     );
+
     this.dom.append(this.buttons.play.getDOM());
 
     this.slider = new Slider(
@@ -81,6 +88,12 @@ export default class Toolbar {
         onSliderEnded: () => {
           this.callbacks.onSliderEnded();
         },
+        onFocus: () => {
+          this.handleChildGotFocus();
+        },
+        onBlur: () => {
+          this.handleChildLostFocus();
+        }
       }
     );
     this.dom.append(this.slider.getDOM());
@@ -110,6 +123,12 @@ export default class Toolbar {
         {
           onClick: () => {
             this.callbacks.onFullscreenClicked();
+          },
+          onFocus: () => {
+            this.handleChildGotFocus();
+          },
+          onBlur: () => {
+            this.handleChildLostFocus();
           }
         }
       );
@@ -233,7 +252,8 @@ export default class Toolbar {
    */
   displayTemporarily(durationMs = DEFAULT_DISPLAY_TIME_MS) {
     this.dom.classList.remove('transparent');
-    window.setTimeout(() => {
+
+    this.hideToolbarTimeout = window.setTimeout(() => {
       this.dom.classList.add('transparent');
     }, durationMs);
   }
@@ -275,5 +295,29 @@ export default class Toolbar {
    */
   setSliderValue(value) {
     this.slider.setValue(value);
+  }
+
+  /**
+   * Handle child lost focus to show toolbar.
+   */
+  handleChildGotFocus() {
+    if (!this.params.hideControls) {
+      return;
+    }
+
+    window.clearTimeout(this.hideToolbarTimeout);
+
+    this.dom.classList.remove('transparent');
+  }
+
+  /**
+   * Handle child lost focus to hide toolbar.
+   */
+  handleChildLostFocus() {
+    if (!this.params.hideControls) {
+      return;
+    }
+
+    this.dom.classList.add('transparent');
   }
 }

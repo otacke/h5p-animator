@@ -43,8 +43,11 @@ export default class ToolbarButton {
     this.disabled = this.params.disabled;
 
     // Sanitize callbacks
-    this.callbacks = callbacks || {};
-    this.callbacks.onClick = this.callbacks.onClick || (() => {});
+    this.callbacks = Util.extend({
+      onClick: () => {},
+      onFocus: () => {},
+      onBlur: () => {}
+    }, callbacks);
 
     // Button
     this.button = document.createElement('button');
@@ -98,6 +101,14 @@ export default class ToolbarButton {
           id: this.params.id
         }
       );
+    });
+
+    this.button.addEventListener('focus', (event) => {
+      this.callbacks.onFocus(event);
+    });
+
+    this.button.addEventListener('blur', (event) => {
+      this.callbacks.onBlur(event);
     });
   }
 

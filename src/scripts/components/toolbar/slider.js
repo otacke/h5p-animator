@@ -12,7 +12,9 @@ export default class Slider {
     this.callbacks = Util.extend({
       onSliderStarted: () => {},
       onSliderSeeked: () => {},
-      onSliderEnded: () => {}
+      onSliderEnded: () => {},
+      onFocus: () => {},
+      onBlur: () => {}
     }, callbacks);
 
     this.dom = document.createElement('div');
@@ -57,6 +59,14 @@ export default class Slider {
       this.slider.addEventListener(eventType, (event) => {
         this.handleSliderEnded();
       });
+    });
+
+    this.slider.addEventListener('focus', () => {
+      this.callbacks.onFocus();
+    });
+
+    this.slider.addEventListener('blur', () => {
+      this.callbacks.onBlur();
     });
 
     this.dom.append(this.slider);
