@@ -1,0 +1,287 @@
+{
+  "semantics": [
+    {
+      "label": "Editor",
+      "fields": [
+        {
+          "label": "Elemente",
+          "entity": "Element",
+          "field": {
+            "label": "Element",
+            "fields": [
+              {
+                "label": "Id"
+              },
+              {
+                "label": "Inhaltstyp"
+              },
+              {
+                "label": "Versteckt"
+              },
+              {
+                "label": "x"
+              },
+              {
+                "label": "y"
+              },
+              {
+                "label": "Breite"
+              },
+              {
+                "label": "Höhe"
+              }
+            ]
+          }
+        },
+        {
+          "label": "Animationen",
+          "entity": "Animation",
+          "field": {
+            "label": "Animation",
+            "fields": [
+              {
+                "label": "subContentId"
+              },
+              {
+                "label": "Effekt",
+                "description": "Wähle einen Effekt für die Animation.",
+                "options": [
+                  {
+                    "label": "Einfliegen"
+                  },
+                  {
+                    "label": "Einblenden"
+                  },
+                  {
+                    "label": "Hineinzoomen"
+                  },
+                  {
+                    "label": "Rotieren"
+                  },
+                  {
+                    "label": "Pulsieren"
+                  },
+                  {
+                    "label": "Horizontal schütteln"
+                  },
+                  {
+                    "label": "Vertikal schütteln"
+                  },
+                  {
+                    "label": "Wackeln"
+                  },
+                  {
+                    "label": "Ausfliegen"
+                  },
+                  {
+                    "label": "Ausblenden"
+                  },
+                  {
+                    "label": "Herauszoomen"
+                  }
+                ]
+              },
+              {
+                "label": "Richtung",
+                "options": [
+                  {
+                    "label": "Von links"
+                  },
+                  {
+                    "label": "Von rechts"
+                  },
+                  {
+                    "label": "Von oben"
+                  },
+                  {
+                    "label": "Von unten"
+                  },
+                  {
+                    "label": "Von oben links"
+                  },
+                  {
+                    "label": "Von oben rechts"
+                  },
+                  {
+                    "label": "Von unten links"
+                  },
+                  {
+                    "label": "Von unten rechts"
+                  }
+                ]
+              },
+              {
+                "label": "Rotationswinkel"
+              },
+              {
+                "label": "Horizontale Distanz"
+              },
+              {
+                "label": "Vertikale Distanz"
+              },
+              {
+                "label": "Richtung",
+                "options": [
+                  {
+                    "label": "Nach links"
+                  },
+                  {
+                    "label": "Nach rechts"
+                  },
+                  {
+                    "label": "Nach oben"
+                  },
+                  {
+                    "label": "Nach unten"
+                  },
+                  {
+                    "label": "Nach oben links"
+                  },
+                  {
+                    "label": "Nach oben rechts"
+                  },
+                  {
+                    "label": "Nach unten links"
+                  },
+                  {
+                    "label": "Nach unten rechts"
+                  }
+                ]
+              },
+              {
+                "label": "Starten mit",
+                "description": "Wähle, ob die Animation mit der vorherigen Animation oder nach der vorherigen Animation starten soll.",
+                "options": [
+                  {
+                    "label": "Mit vorheriger"
+                  },
+                  {
+                    "label": "Nach vorheriger"
+                  }
+                ]
+              },
+              {
+                "label": "Verzögerung",
+                "description": "Setze optional eine Verzögerung der Animation in Sekunden."
+              },
+              {
+                "label": "Dauer",
+                "description": "Setze die Dauer der Animation in Sekunden."
+              },
+              {
+                "label": "Bewegungsdynamik",
+                "description": "Wähle einen Dynamiktyp für die Bewegung der Animation.",
+                "options": [
+                  {
+                    "label": "Linear"
+                  },
+                  {
+                    "label": "Beschleunigend"
+                  },
+                  {
+                    "label": "Abbremsend"
+                  },
+                  {
+                    "label": "Beschleunigend und abbremsend"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "label": "Hintergrund",
+      "fields": [
+        {
+          "label": "Hintergrunfarbe",
+          "description": "Wähle eine Farbe für den Hintergrund."
+        },
+        {
+          "label": "Hintergrundbild",
+          "description": "Wähle ein Bild für den Hintergrund."
+        }
+      ]
+    },
+    {
+      "label": "Audio",
+      "fields": [
+        {
+          "label": "Tondatei",
+          "description": "Wähle eine Tondatei für die Wiedergabe während der Animation."
+        },
+        {
+          "label": "Dummy"
+        }
+      ]
+    },
+    {
+      "label": "Verhaltenseinstellungen",
+      "fields": [
+        {
+          "label": "Seitenverhältnis",
+          "description": "Wähle ein Seitenverhältnis für die Animation.",
+          "default": "16/9"
+        },
+        {
+          "label": "Verstecke Bedienelemente"
+        }
+      ]
+    },
+    {
+      "label": "Texte für Barrierefreiheit",
+      "fields": [
+        {
+          "label": "Abspielen",
+          "default": "Abspielen"
+        },
+        {
+          "label": "Pause",
+          "default": "Pause"
+        },
+        {
+          "label": "Vollbildmodus aktivieren",
+          "default": "Gehe in den Vollbildmodus"
+        },
+        {
+          "label": "Vollbildmodus deaktivieren",
+          "default": "Verlasse den Vollbildmodus"
+        },
+        {
+          "label": "Zeitschieberegler",
+          "default": "Zeitschieberegler"
+        },
+        {
+          "label": "Stunden",
+          "default": "Stunden"
+        },
+        {
+          "label": "Stunde",
+          "default": "Stunde"
+        },
+        {
+          "label": "Minuten",
+          "default": "Minuten"
+        },
+        {
+          "label": "Minute",
+          "default": "Minute"
+        },
+        {
+          "label": "Sekunden",
+          "default": "Sekunden"
+        },
+        {
+          "label": "Sekunde",
+          "default": "Sekunde"
+        },
+        {
+          "label": "Menschenlesbares Zeitformat",
+          "description": "Menschenlesbares Zeitformat. @hours, @minutes, @seconds sind Platzhalter für die tatsächlichen Werte. @hourLabel, @minuteLabel, @secondLabel sind Platzhalter für die Einheiten der Werte.",
+          "default": "@hours @hourLabel, @minutes @minuteLabel, @seconds @secondLabel"
+        }
+      ]
+    }
+  ]
+}

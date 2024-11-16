@@ -278,7 +278,7 @@
         },
         {
           "label": "Human time",
-          "description": "Human readable time format. @hours, @minutes, @seconds are placeholders for the actual values. @hourLabel, @minuteLabel, @secondLabel are placeholders for the labels of the values.",
+          "description": "Human readable time format. @hours, @minutes, @seconds are placeholders for the actual values. @hourLabel, @minuteLabel, @secondLabel are placeholders for the units of the values.",
           "default": "@hours @hourLabel, @minutes @minuteLabel, @seconds @secondLabel"
         }
       ]
