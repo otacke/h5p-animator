@@ -1,4 +1,9 @@
 # H5P Animator
+H5P content type to create web animations with.
+
+There's a separate repository at https://github.com:otacke/h5p-animator-docs with documentation, tutorials, etc.
+
+Please find the code for the editor widget at https://github.com:otacke/h5p-editor-animator.
 
 ## Getting started
 Clone this repository with git and check out the branch that you are interested
