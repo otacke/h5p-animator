@@ -1,6 +1,6 @@
 {
   "name": "h5p-animator",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "H5P content type to create web animations with",
   "private": true,
   "scripts": {
