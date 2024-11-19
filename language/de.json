@@ -226,6 +226,10 @@
         },
         {
           "label": "Verstecke Bedienelemente"
+        },
+        {
+          "label": "Beschreibung",
+          "description": "Gib eine textuelle Beschreibung der Animation an, die von Bildschirmlesern bereitgestellt wird."
         }
       ]
     },

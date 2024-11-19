@@ -411,6 +411,13 @@
         "type": "boolean",
         "label": "Hide controls",
         "default": false
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "label": "Description",
+        "description": "Provide a textual description of the animation which will be provided by screen readers.",
+        "length": 5000
       }
     ]
   },

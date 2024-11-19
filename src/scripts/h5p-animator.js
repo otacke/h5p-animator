@@ -76,6 +76,7 @@ export default class Animator extends H5P.EventDispatcher {
         backgroundImage: this.retrieveBackgroundImage(
           this.params.background.backgroundImage?.path, this.contentId
         ),
+        description: this.params.behaviour.description,
         elements: this.retrieveElements(this.params.editor.elements),
         dictionary: this.dictionary,
         globals: this.globals,

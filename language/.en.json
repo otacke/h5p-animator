@@ -226,6 +226,10 @@
         },
         {
           "label": "Hide controls"
+        },
+        {
+          "label": "Description",
+          "description": "Provide a textual description of the animation which will be provided by screen readers."
         }
       ]
     },
