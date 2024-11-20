@@ -4,7 +4,6 @@ import Toolbar from '@components/toolbar/toolbar.js';
 import Timeline from '@models/timeline.js';
 import Jukebox from '@services/jukebox.js';
 import { MS_IN_S, secondsToMilliseconds, millisecondsToSeconds } from '@services/time-util.js';
-import { decode } from 'he';
 import './main.scss';
 
 /** @constant {number} FRAMES_PER_SECOND Frames per second aspired. */
@@ -50,7 +49,7 @@ export default class AnimatorMain {
       const description = document.createElement('div');
       description.classList.add('h5p-animator-description');
       description.classList.add('sr-only');
-      description.textContent = decode(this.params.description);
+      description.textContent = Util.purifyHTML(this.params.description);
       this.dom.append(description);
     }
 
