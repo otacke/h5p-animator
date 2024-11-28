@@ -42,4 +42,13 @@ export default class Util {
 
     return text;
   }
+
+  /**
+   * Decode HTML entities.
+   * @param {string} html HTML
+   * @returns {string} Decoded HTML.
+   */
+  static decodeHTML(html) {
+    return decode(html);
+  }
 }

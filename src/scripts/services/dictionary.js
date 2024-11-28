@@ -1,4 +1,4 @@
-import { decode } from 'he';
+import Util from '@services/util.js';
 
 export default class Dictionary {
 
@@ -52,7 +52,7 @@ export default class Dictionary {
       }
     }
     else if (typeof translation === 'string') {
-      translation = decode(translation);
+      translation = Util.decodeHTML(translation);
       const div = document.createElement('div');
       div.innerHTML = translation;
       translation = div.textContent || div.innerText || '';
