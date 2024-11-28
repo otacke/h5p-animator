@@ -8,7 +8,7 @@
   flex-shrink: 0;
   gap: 0.5rem;
   overflow: hidden;
-  padding: 0.5em;
+  padding: 0.5rem;
 
   &.absolute {
     bottom: 0;
@@ -32,18 +32,22 @@
     position: relative;
     flex-shrink: 0;
 
+    &::before {
+      content: "";
+      font-family: "H5PFontAwesome4", sans-serif;
+      font-size: 1.15rem;
+      height: 1.15rem;
+      left: 50%;
+      margin-left: -0.575rem;
+      margin-top: -0.575rem;
+      position: absolute;
+      top: 50%;
+      width: 1.15rem;
+    }
+
     &.toolbar-button-play {
       &::before {
-        content: "\f04b";
-        font-family: "H5PFontAwesome4", sans-serif;
-        font-size: 1.15em;
-        height: 1.15em;
-        left: 50%;
-        margin-left: -0.575em;
-        margin-top: -0.575em;
-        position: absolute;
-        top: 50%;
-        width: 1.15em;
+        content: var(--icon-fontawesome-play);
       }
 
       &.toolbar-button-active {
@@ -52,7 +56,7 @@
         }
 
         &::before {
-          content: "\f04c";
+          content: var(--icon-fontawesome-pause);
         }
       }
     }
@@ -60,26 +64,14 @@
     &.toolbar-button-fullscreen {
       &.toolbar-button-exit-fullscreen {
         &::before {
-          content: "\f066";
+          content: var(--icon-fontawesome-shrink);
         }
       }
 
       &.toolbar-button-enter-fullscreen {
         &::before {
-          content: "\f065";
+          content: var(--icon-fontawesome-expand);
         }
-      }
-
-      &::before {
-        font-family: "H5PFontAwesome4", sans-serif;
-        font-size: 1.15em;
-        height: 1.15em;
-        left: 50%;
-        margin-left: -0.575em;
-        margin-top: -0.575em;
-        position: absolute;
-        top: 50%;
-        width: 1.15em;
       }
     }
   }

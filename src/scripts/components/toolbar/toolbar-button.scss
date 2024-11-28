@@ -1,12 +1,11 @@
-$titlebarButtonBackgroundSize: 1.25em;
-
 .toolbar-button {
+  --button-background-size: 1.25em;
   --button-size: 3em;
 
   background-color: var(--color-primary-5);
   background-position: center;
   background-repeat: no-repeat;
-  background-size: $titlebarButtonBackgroundSize $titlebarButtonBackgroundSize;
+  background-size: var(--button-background-size) var(--button-background-size);
   border: 2px solid var(--color-text-light); /* Same px value as used by Joubel in Interactive Book */
   border-radius: 3px; /* Same px value as used by Joubel in Interactive Book */
   font-size: 1em;
@@ -28,7 +27,7 @@ $titlebarButtonBackgroundSize: 1.25em;
       background-color: var(--color-primary);
       background-position: center;
       background-repeat: no-repeat;
-      background-size: $titlebarButtonBackgroundSize $titlebarButtonBackgroundSize;
+      background-size: var(--button-background-size) var(--button-background-size);
       opacity: 20;
 
       &:hover {
@@ -46,7 +45,7 @@ $titlebarButtonBackgroundSize: 1.25em;
     background-color: var(--color-disabled);
 
     &::before {
-      color: #fff;
+      color: var(--color-background);
     }
   }
 }

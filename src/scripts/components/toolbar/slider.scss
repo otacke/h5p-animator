@@ -1,14 +1,6 @@
-$sliderHeight: 3em;
-
 .h5p-animator-slider-container {
+  --box-shadow-params: 0 0 0 0.5rem;
   --slider-min-width: 4rem;
-  --color-primary-dark: rgb(23, 104, 196);
-  --color-primary-dark-80: rgb(23 104 196 / 80%);
-  --color-primary-15: rgb(26 115 217 / 15%);
-  --color-primary-20: rgb(26 115 217 / 20%);
-  --color-primary-30: rgb(26 115 217 / 30%);
-
-  --color-disabled: rgb(128 128 128 / 95%);
 
   min-width: var(--slider-min-width);
   width: 100%;
@@ -32,11 +24,11 @@ $sliderHeight: 3em;
       }
     }
 
-    &:not[disabled] {
+    &:not([disabled]) {
       cursor: pointer;
     }
 
-    &:hover:not[disabled] {
+    &:hover:not([disabled]) {
       opacity: 1;
     }
 
@@ -49,16 +41,16 @@ $sliderHeight: 3em;
       height: 1rem;
       width: 1rem;
 
-      &:hover:not[disabled] {
-        box-shadow: 0 0 0 0.5rem var(--color-primary-20);
+      &:hover:not([disabled]) {
+        box-shadow: var(--box-shadow-params) var(--color-primary-20);
       }
 
-      &:active:not[disabled] {
-        box-shadow: 0 0 0 0.5rem var(--color-primary-30);
+      &:active:not([disabled]) {
+        box-shadow: var(--box-shadow-params) var(--color-primary-30);
       }
 
-      &:focus:not[disabled] {
-        box-shadow: 0 0 0 0.5rem var(--color-primary-30);
+      &:focus:not([disabled]) {
+        box-shadow: var(--box-shadow-params) var(--color-primary-30);
       }
     }
 
@@ -70,26 +62,26 @@ $sliderHeight: 3em;
       height: 1rem;
       width: 1rem;
 
-      &:hover:not[disabled] {
-        box-shadow: 0 0 0 0.5rem var(--color-primary-20);
+      &:hover:not([disabled]) {
+        box-shadow: var(--box-shadow-params) var(--color-primary-20);
       }
 
-      &:active:not[disabled] {
-        box-shadow: 0 0 0 0.5rem var(--color-primary-30);
+      &:active:not([disabled]) {
+        box-shadow: var(--box-shadow-params) var(--color-primary-30);
       }
 
-      &:focus:not[disabled] {
-        box-shadow: 0 0 0 0.5rem var(--color-primary-30);
+      &:focus:not([disabled]) {
+        box-shadow: var(--box-shadow-params) var(--color-primary-30);
       }
     }
 
     &:focus {
       &::-webkit-slider-thumb {
-        box-shadow: 0 0 0 0.5rem var(--color-primary-20);
+        box-shadow: var(--box-shadow-params) var(--color-primary-20);
       }
 
       &::-moz-range-thumb {
-        box-shadow: 0 0 0 0.5rem var(--color-primary-20);
+        box-shadow: var(--box-shadow-params) var(--color-primary-20);
       }
     }
   }
