@@ -10,14 +10,11 @@ export default class Canvas {
   /**
    * @class
    * @param {object} [params] Parameters passed by the editor.
-   * @param {object} [callbacks] Callbacks.
    */
-  constructor(params = {}, callbacks = {}) {
+  constructor(params = {}) {
     params = Util.extend({
       elements: [],
     }, params);
-
-    callbacks = Util.extend({}, callbacks);
 
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-animator-canvas');

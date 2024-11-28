@@ -5,9 +5,8 @@ export default class CanvasElement {
   /**
    * @class
    * @param {object} [params] Parameters passed by the editor.
-   * @param {object} [callbacks] Callbacks.
    */
-  constructor(params = {}, callbacks = {}) {
+  constructor(params = {}) {
     this.params = Util.extend({}, params);
 
     this.dom = document.createElement('div');

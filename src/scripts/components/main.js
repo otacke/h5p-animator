@@ -60,8 +60,7 @@ export default class AnimatorMain {
         backgroundImage: this.params.backgroundImage,
         globals: this.params.globals,
         elements: this.params.elements
-      },
-      {}
+      }
     );
 
     const elementsLookup = this.canvas.elements.reduce((acc, element) => {
