@@ -136,6 +136,9 @@ export default class AnimatorMain {
         this.handleSliderSeeked(this.currentTime - 1, true);
       }
       else if (event.key === KEY_PLAY_PAUSE) {
+        if (event.repeat) {
+          return;
+        }
         this.handlePlayPause();
       }
       else if (event.key === KEY_FORWARD) {

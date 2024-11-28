@@ -115,10 +115,11 @@ export default class Slider {
   /**
    * Handle keyboard event.
    * @param {KeyboardEvent} event Keyboard event.
+   * @returns {boolean} True if key was handled, false otherwise.
    */
   handleKeyboardEvent(event) {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.code)) {
-      return;
+      return false;
     }
 
     // Speed up slightly when holding down keys (only relevant for left/right keys).
@@ -141,6 +142,8 @@ export default class Slider {
 
     this.handleSliderSeeked(parseFloat(this.slider.value));
     event.preventDefault();
+
+    return true;
   }
 
   /**
@@ -149,10 +152,14 @@ export default class Slider {
    */
   handleSliderStarted(event) {
     if (event instanceof KeyboardEvent) {
-      this.handleKeyboardEvent(event);
+      const wasKeyHandled = this.handleKeyboardEvent(event);
+      if (wasKeyHandled) {
+        this.callbacks.onSliderStarted();
+      }
     }
-
-    this.callbacks.onSliderStarted();
+    else {
+      this.callbacks.onSliderStarted();
+    }
   }
 
   /**
