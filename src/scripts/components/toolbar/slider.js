@@ -36,21 +36,6 @@ export default class Slider {
       });
     });
 
-    this.slider.addEventListener('keydown', (event) => {
-      // Speed up slightly when holding down arrow keys
-      const timeDeltaS = Math.max(1, Math.log(this.keydownTime + 1));
-
-      if (event.key === 'ArrowLeft') {
-        this.setValue(Math.max(0, this.getValue() - timeDeltaS));
-      }
-      else if (event.key === 'ArrowRight') {
-        this.setValue(
-          Math.min(this.getValue() + timeDeltaS, this.params.maxValue)
-        );
-      }
-      this.keydownTime ++;
-    });
-
     this.slider.addEventListener('input', (event) => {
       this.handleSliderSeeked(parseFloat(this.slider.value));
     });
@@ -113,7 +98,7 @@ export default class Slider {
       return;
     }
 
-    this.slider.value = Math.max(0, Math.min(this.params.maxValue, value));
+    this.slider.value = Math.max(0, Math.min(value, this.params.maxValue));
     this.slider.setAttribute('aria-valuenow', value);
     this.slider.setAttribute(
       'aria-valuetext',
@@ -128,18 +113,43 @@ export default class Slider {
   }
 
   /**
+   * Handle keyboard event.
+   * @param {KeyboardEvent} event Keyboard event.
+   */
+  handleKeyboardEvent(event) {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.code)) {
+      return;
+    }
+
+    // Speed up slightly when holding down keys (only relevant for left/right keys).
+    const timeDeltaS = Math.max(1, Math.log(this.keydownTime + 1));
+
+    if (event.code === 'ArrowLeft') {
+      this.setValue(this.getValue() - timeDeltaS);
+    }
+    else if (event.code === 'ArrowRight') {
+      this.setValue(this.getValue() + timeDeltaS);
+    }
+    else if (event.code === 'Home') {
+      this.setValue(0);
+    }
+    else if (event.code === 'End') {
+      this.setValue(this.params.maxValue);
+    }
+
+    this.keydownTime ++;
+
+    this.handleSliderSeeked(parseFloat(this.slider.value));
+    event.preventDefault();
+  }
+
+  /**
    * Handle slider started.
    * @param {Event} event Event.
    */
   handleSliderStarted(event) {
     if (event instanceof KeyboardEvent) {
-      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.code)) {
-        return;
-      }
-      else {
-        this.handleSliderSeeked(parseFloat(this.slider.value));
-        event.preventDefault();
-      }
+      this.handleKeyboardEvent(event);
     }
 
     this.callbacks.onSliderStarted();

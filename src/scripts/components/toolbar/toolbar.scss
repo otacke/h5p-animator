@@ -3,6 +3,8 @@
   background-color: var(--color-background);
   box-shadow: 10px 10px 30px var(--color-shadow-light);
   box-sizing: border-box;
+  container-name: toolbar;
+  container-type: inline-size;
   display: flex;
   flex-direction: row;
   flex-shrink: 0;
@@ -77,6 +79,12 @@
   }
 
   &.display-none {
+    display: none;
+  }
+}
+
+@container toolbar (width < 320px) {
+  .h5p-animator-time-display {
     display: none;
   }
 }

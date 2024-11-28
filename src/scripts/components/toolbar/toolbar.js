@@ -98,9 +98,7 @@ export default class Toolbar {
     );
     this.dom.append(this.slider.getDOM());
 
-    this.timeDisplay = new TimeDisplay({
-      maxTime: this.params.maxTime
-    });
+    this.timeDisplay = new TimeDisplay({ maxTime: this.params.maxTime });
     this.dom.append(this.timeDisplay.getDOM());
 
     if (this.params.globals.get('isFullscreenSupported')) {
@@ -177,17 +175,6 @@ export default class Toolbar {
   }
 
   /**
-   * Resize.
-   */
-  resize() {
-    // Could be done with a CSS container query once support is better
-    this.timeDisplay.getDOM().classList.toggle(
-      'display-none',
-      this.dom.offsetWidth < BREAKPOINT_HIDE_TIME_DISPLAY
-    );
-  }
-
-  /**
    * Force button state.
    * @param {string} id Button id.
    * @param {boolean|number} active If true, toggle active, else inactive.
@@ -247,22 +234,23 @@ export default class Toolbar {
   }
 
   /**
+   * Hide.
+   */
+  hide() {
+    this.dom.classList.add('display-none');
+  }
+
+  /**
    * Display toolbar temporarily, then turn transparent.
    * @param {number} [durationMs] Duration for showing.
    */
   displayTemporarily(durationMs = DEFAULT_DISPLAY_TIME_MS) {
     this.dom.classList.remove('transparent');
 
+    window.clearTimeout(this.hideToolbarTimeout);
     this.hideToolbarTimeout = window.setTimeout(() => {
       this.dom.classList.add('transparent');
     }, durationMs);
-  }
-
-  /**
-   * Hide.
-   */
-  hide() {
-    this.dom.classList.add('display-none');
   }
 
   /**
@@ -281,7 +269,7 @@ export default class Toolbar {
     this.slider.setValue(value);
   }
 
-  /*
+  /**
    * Set time display value.
    * @param {number} value Time value.
    */

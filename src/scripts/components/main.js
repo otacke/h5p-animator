@@ -12,6 +12,15 @@ const FRAMES_PER_SECOND = 25;
 /** @constant {number} UPDATE_INTERVAL_MS Update interval in milliseconds. */
 const UPDATE_INTERVAL_MS = MS_IN_S / FRAMES_PER_SECOND;
 
+/** @constant {string} KEY_REWIND Key to rewind. */
+const KEY_REWIND = 'j';
+
+/** @constant {string} KEY_PLAY_PAUSE Key to play/pause. */
+const KEY_PLAY_PAUSE = 'k';
+
+/** @constant {string} KEY_FORWARD Key to forward. */
+const KEY_FORWARD = 'l';
+
 export default class AnimatorMain {
   /**
    * @class
@@ -45,6 +54,7 @@ export default class AnimatorMain {
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-animator-main');
 
+    // Screen reader only description
     if (typeof this.params.description === 'string') {
       const description = document.createElement('div');
       description.classList.add('h5p-animator-description');
@@ -53,26 +63,22 @@ export default class AnimatorMain {
       this.dom.append(description);
     }
 
-    this.canvas = new Canvas(
-      {
-        aspectRatio: this.params.aspectRatio,
-        backgroundColor: this.params.backgroundColor,
-        backgroundImage: this.params.backgroundImage,
-        globals: this.params.globals,
-        elements: this.params.elements
-      }
-    );
+    this.canvas = new Canvas({
+      aspectRatio: this.params.aspectRatio,
+      backgroundColor: this.params.backgroundColor,
+      backgroundImage: this.params.backgroundImage,
+      globals: this.params.globals,
+      elements: this.params.elements
+    });
 
     const elementsLookup = this.canvas.elements.reduce((acc, element) => {
       const subContentId = element.getSubContentId();
-      if (!subContentId) {
-        return acc;
+      if (subContentId) {
+        acc[subContentId] = {
+          dom: element.getDOM(),
+          geometry: element.getGeometry()
+        };
       }
-
-      acc[element.getSubContentId()] = {
-        dom: element.getDOM(),
-        geometry: element.getGeometry()
-      };
 
       return acc;
     }, {});
@@ -93,16 +99,13 @@ export default class AnimatorMain {
       },
       {
         onSliderStarted: () => {
-          this.continueState = this.isPlayingState;
-          this.stop({ keepState: true });
+          this.handleSliderStarted();
         },
         onSliderSeeked: (value) => {
           this.handleSliderSeeked(value);
         },
         onSliderEnded: () => {
-          if (this.continueState) {
-            this.start();
-          }
+          this.handleSliderEnded();
         },
         onPlayClicked: () => {
           this.handlePlayPause();
@@ -112,9 +115,11 @@ export default class AnimatorMain {
         }
       }
     );
+
     if (this.hasAudio) {
       this.toolbar.disableButton('play');
       this.toolbar.disableSlider();
+      // Will be enabled when audio is ready
     }
 
     if (this.params.hideControls) {
@@ -127,13 +132,13 @@ export default class AnimatorMain {
     }
 
     document.body.addEventListener('keydown', (event) => {
-      if (event.key === 'j') {
+      if (event.key === KEY_REWIND) {
         this.handleSliderSeeked(this.currentTime - 1, true);
       }
-      else if (event.key === 'k') {
+      else if (event.key === KEY_PLAY_PAUSE) {
         this.handlePlayPause();
       }
-      else if (event.key === 'l') {
+      else if (event.key === KEY_FORWARD) {
         this.handleSliderSeeked(this.currentTime + 1, true);
       }
     });
@@ -162,21 +167,25 @@ export default class AnimatorMain {
   resize(params = {}) {
     let maxCanvasHeight;
     if (H5P.isFullscreen) {
-      const toolbarHeight = this.params.hideControls ?
-        0 :
-        this.toolbar.getFullHeight();
+      const toolbarHeight = this.params.hideControls ? 0 : this.toolbar.getFullHeight();
 
       if (params.containerSize.height) {
         maxCanvasHeight = params.containerSize.height - toolbarHeight;
       }
     }
 
-    this.toolbar.resize();
-
     this.canvas.resize({
       sizeFactor: params.sizeFactor,
       ...(maxCanvasHeight && { maxHeight: maxCanvasHeight })
     });
+  }
+
+  /**
+   * Handle slider started.
+   */
+  handleSliderStarted() {
+    this.continueState = this.isPlayingState;
+    this.stop({ keepState: true });
   }
 
   /**
@@ -193,6 +202,15 @@ export default class AnimatorMain {
       this.toolbar.setSliderValue(this.currentTime);
     }
     this.timeline.seek(secondsToMilliseconds(this.currentTime));
+  }
+
+  /**
+   * Handle slider ended.
+   */
+  handleSliderEnded() {
+    if (this.continueState) {
+      this.start();
+    }
   }
 
   /**
@@ -216,12 +234,15 @@ export default class AnimatorMain {
     if (!params.keepState) {
       this.isPlayingState = false;
     }
+
     window.clearTimeout(this.updateTimeout);
+
     if (!params.keepState) {
       this.toolbar.forceButton('play', false, { noCallback: true });
     }
 
     this.timeline.pause();
+
     if (this.hasAudio) {
       this.jukebox.stop('background');
     }
@@ -232,7 +253,7 @@ export default class AnimatorMain {
    */
   start() {
     if (this.currentTime >= millisecondsToSeconds(this.duration)) {
-      this.currentTime = 0;
+      this.currentTime = 0; // Restart from beginning after finished
     }
 
     this.lastTickMS = Date.now();
@@ -260,7 +281,9 @@ export default class AnimatorMain {
     this.currentTime = this.currentTime + secondsPassed;
 
     const durattionS = millisecondsToSeconds(this.duration);
+
     if (this.currentTime > durattionS) {
+      // Animation finished
       this.toolbar.setSliderValue(durattionS);
       this.toolbar.setTimeDisplayValue(durattionS);
 

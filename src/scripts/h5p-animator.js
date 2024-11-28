@@ -43,7 +43,6 @@ export default class Animator extends H5P.EventDispatcher {
       }
     }, H5PUtil.getSemanticsDefaults());
 
-    // Sanitize parameters
     this.params = Util.extend(defaults, params);
 
     this.contentId = contentId;
@@ -57,9 +56,7 @@ export default class Animator extends H5P.EventDispatcher {
     this.globals = new Globals();
     this.globals.set('mainInstance', this);
     this.globals.set('contentId', this.contentId);
-    this.globals.set('isFullscreenSupported',
-      this.isRoot() && H5P.fullscreenSupported
-    );
+    this.globals.set('isFullscreenSupported', this.isRoot() && H5P.fullscreenSupported);
     this.globals.set('resize', () => {
       this.trigger('resize');
     });
@@ -87,11 +84,18 @@ export default class Animator extends H5P.EventDispatcher {
           this.handleFullscreenClicked();
         }
       });
+
     this.dom = this.main.getDOM();
 
     if (this.globals.get('isFullscreenSupported')) {
       this.on('exitFullScreen', () => {
-        this.triggerResizeAfterFullscreen();
+        /*
+        * Wait for fullscreen to exit. H5P core does not relay exitFullscreen
+        * promise and fullscreenchange event support is bad in Safari.
+        */
+        window.setTimeout(() => {
+          this.trigger('resize');
+        }, FULLSCREEN_RESIZE_DELAY_MS);
       });
     }
   }
@@ -132,6 +136,7 @@ export default class Animator extends H5P.EventDispatcher {
    */
   retrieveElements(elements = []) {
     return elements
+      .filter((element) => element.contentType?.library !== undefined)
       .map((element) => ({
         contentType: element.contentType,
         geometry: {
@@ -142,7 +147,6 @@ export default class Animator extends H5P.EventDispatcher {
         }
       }))
       .filter((element) =>
-        element.contentType.library !== undefined &&
         !Number.isNaN(element.geometry.x) &&
         !Number.isNaN(element.geometry.y) &&
         !Number.isNaN(element.geometry.width) &&
@@ -157,6 +161,7 @@ export default class Animator extends H5P.EventDispatcher {
    */
   retrieveAnimations(animations = []) {
     animations = animations
+      .filter((animation) => animation !== null)
       .map((animation) => {
         if (typeof animation !== 'object' || animation === null) {
           return null;
@@ -174,7 +179,6 @@ export default class Animator extends H5P.EventDispatcher {
 
         return animation;
       })
-      .filter((animation) => animation !== null)
       .filter((animation) =>
         !Number.isNaN(animation.delay) &&
         !Number.isNaN(animation.duration)
@@ -195,7 +199,6 @@ export default class Animator extends H5P.EventDispatcher {
     }
 
     const image = new Image();
-
     H5P.setSource(image, { path: path }, contentId);
 
     return image.src ?? '';
@@ -272,16 +275,6 @@ export default class Animator extends H5P.EventDispatcher {
     }
   }
 
-  /*
-   * Wait for fullscreen to exit. H5P core does not relay exitFullscreen
-   * promise and fullscreenchange event support is bad in Safari.
-   */
-  triggerResizeAfterFullscreen() {
-    window.setTimeout(() => {
-      this.trigger('resize');
-    }, FULLSCREEN_RESIZE_DELAY_MS);
-  }
-
   /**
    * Get task title.
    * @returns {string} Title.
@@ -303,6 +296,7 @@ export default class Animator extends H5P.EventDispatcher {
 
   /**
    * Reset.
+   * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-5}
    */
   resetTask() {
     this.main.reset();

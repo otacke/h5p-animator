@@ -21,10 +21,9 @@ export default class CanvasElement {
       this.params.contentType.params.visuals.disableFullscreen = true;
     }
 
-    const contentId = this.params.globals.get('contentId');
     this.instance = H5P.newRunnable(
       this.params.contentType,
-      contentId,
+      this.params.globals.get('contentId'),
       H5P.jQuery(this.dom)
     );
 
@@ -94,10 +93,8 @@ export default class CanvasElement {
       // Prevent target from sending event back down
       target.bubblingUpwards = true;
 
-      // Trigger event
       target.trigger(eventName, event);
 
-      // Reset
       target.bubblingUpwards = false;
     });
   }
@@ -111,7 +108,7 @@ export default class CanvasElement {
   bubbleDown(origin, eventName, targets) {
     origin.on(eventName, (event) => {
       if (origin.bubblingUpwards) {
-        return; // Prevent send event back down.
+        return; // Prevent sending event back down.
       }
 
       targets.forEach((target) => {

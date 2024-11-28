@@ -112,3 +112,36 @@ export const toHumanTime = (timeS, options = {}) => {
 
   return humanTimeSegments.join(', ');
 };
+
+/**
+ * Convert time in seconds to ARIA datetime.
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time
+ * @param {number} timeS Time in seconds.
+ * @returns {string} ARIA datetime duration.
+ */
+export const toAriaDatetime = (timeS) => {
+  if (typeof timeS !== 'number') {
+    return '';
+  }
+
+  const timecode = toTimecode(timeS);
+  const segments = timecode.split(':');
+
+  const ariaDateTimeSegments = [];
+  // eslint-disable-next-line no-magic-numbers
+  if (segments.length > 2) {
+    const hoursValue = parseInt(segments[0]);
+    ariaDateTimeSegments.push(`${hoursValue.toString()}h`);
+  }
+
+  if (segments.length > 1) {
+    // eslint-disable-next-line no-magic-numbers
+    const minutesValue = parseInt(segments[segments.length - 2]);
+    ariaDateTimeSegments.push(`${minutesValue.toString()}m`);
+  }
+
+  const secondsValue = parseInt(segments[segments.length - 1]);
+  ariaDateTimeSegments.push(`${secondsValue.toString()}s`);
+
+  return ariaDateTimeSegments.join(' ');
+};

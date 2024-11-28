@@ -1,5 +1,5 @@
 import Util from '@services/util.js';
-import { toTimecode } from '@services/time-util.js';
+import { toAriaDatetime, toTimecode } from '@services/time-util.js';
 import './time-display.scss';
 
 export default class TimeDisplay {
@@ -14,12 +14,10 @@ export default class TimeDisplay {
       maxTime: 100
     }, params);
 
-    // TODO: Make time accessible
-
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-animator-time-display');
 
-    this.currentTime = document.createElement('div');
+    this.currentTime = document.createElement('time');
     this.currentTime.classList.add('h5p-animator-time-display-current');
     this.dom.append(this.currentTime);
 
@@ -28,8 +26,9 @@ export default class TimeDisplay {
     separator.textContent = '/ ';
     this.dom.append(separator);
 
-    const maxTime = document.createElement('div');
+    const maxTime = document.createElement('time');
     maxTime.classList.add('h5p-animator-time-display-max');
+    maxTime.setAttribute('datetime', toAriaDatetime(this.params.maxTime));
     maxTime.textContent = toTimecode(this.params.maxTime, { padMinutes: true });
     this.dom.append(maxTime);
 
@@ -49,11 +48,12 @@ export default class TimeDisplay {
    * @param {number} time Time.
    */
   setTime(time) {
-    if (typeof time === 'number') {
-      time = toTimecode(time, { padMinutes: true });
+    if (typeof time !== 'number') {
+      return;
     }
 
-    this.currentTime.textContent = time;
+    this.currentTime.setAttribute('datetime', toAriaDatetime(time));
+    this.currentTime.textContent = toTimecode(time, { padMinutes: true });
   }
 
   /**
