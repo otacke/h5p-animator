@@ -16,7 +16,7 @@ const calculateOffsiteX = (position, width, side) => {
     offset = (position + width) / width * -100 - EXTRA_OFFSITE_OFFSET_PX;
   }
   else if (side.includes('Right')) {
-    // eslint-disable-next-line no-magic-numbers
+     
     offset = (100 - position) / width * 100 + EXTRA_OFFSITE_OFFSET_PX;
   }
 
@@ -38,7 +38,7 @@ const calculateOffsiteY = (position, height, side) => {
     offset = (position + height) / height * -100 - EXTRA_OFFSITE_OFFSET_PX;
   }
   else if (side.includes('Bottom')) {
-    // eslint-disable-next-line no-magic-numbers
+     
     offset = (100 - position) / height * 100 + EXTRA_OFFSITE_OFFSET_PX;
   }
 
@@ -58,14 +58,14 @@ export const createFlyInParams = (animationParams, geometry, animation) => {
   if (offsiteXIn !== 0) {
     animationParams.translateX = [
       { value: `${offsiteXIn}%`, duration: 0 },
-      { value: '0%', duration: animationParams.duration }
+      { value: '0%', duration: animationParams.duration },
     ];
   }
 
   if (offsiteYIn !== 0) {
     animationParams.translateY = [
       { value: `${offsiteYIn}%`, duration: 0 },
-      { value: '0%', duration: animationParams.duration }
+      { value: '0%', duration: animationParams.duration },
     ];
   }
 };
@@ -77,7 +77,7 @@ export const createFlyInParams = (animationParams, geometry, animation) => {
 export const createFadeInParams = (animationParams) => {
   animationParams.opacity = [
     { value: 0, duration: 0 },
-    { value: 1, duration: animationParams.duration }
+    { value: 1, duration: animationParams.duration },
   ];
 };
 
@@ -88,7 +88,7 @@ export const createFadeInParams = (animationParams) => {
 export const createZoomInParams = (animationParams) => {
   animationParams.scale = [
     { value: 0, duration: 0 },
-    { value: 1, duration: animationParams.duration }
+    { value: 1, duration: animationParams.duration },
   ];
 };
 
@@ -100,7 +100,7 @@ export const createZoomInParams = (animationParams) => {
  */
 export const createRotateParams = (animationParams, geometry, animation) => {
   animationParams.rotate = [
-    { value: animation.rotate }
+    { value: animation.rotate },
   ];
 };
 
@@ -112,7 +112,7 @@ export const createPulseParams = (animationParams) => {
   animationParams.scale = [
     { value: 1 },
     { value: 1.05 },
-    { value: 1 }
+    { value: 1 },
   ];
 };
 
@@ -128,7 +128,7 @@ export const createWobbleParams = (animationParams) => {
     { value: '-15%' },
     { value: '10%' },
     { value: '-5%' },
-    { value: 0 }
+    { value: 0 },
   ];
 };
 
@@ -144,7 +144,7 @@ export const createShakeXParams = (animationParams) => {
     { value: '-10%' },
     { value: '10%' },
     { value: '-10%' },
-    { value: 0 }
+    { value: 0 },
   ];
 };
 
@@ -160,7 +160,7 @@ export const createShakeYParams = (animationParams) => {
     { value: '-10%' },
     { value: '10%' },
     { value: '-10%' },
-    { value: 0 }
+    { value: 0 },
   ];
 };
 
@@ -188,14 +188,14 @@ export const createFlyOutParams = (animationParams, geometry, animation) => {
   if (offsiteXOut !== 0) {
     animationParams.translateX = [
       { value: '0%', duration: 0 },
-      { value: `${offsiteXOut}%`, duration: animationParams.duration }
+      { value: `${offsiteXOut}%`, duration: animationParams.duration },
     ];
   }
 
   if (offsiteYOut !== 0) {
     animationParams.translateY = [
       { value: '0%', duration: 0 },
-      { value: `${offsiteYOut}%`, duration: animationParams.duration }
+      { value: `${offsiteYOut}%`, duration: animationParams.duration },
     ];
   }
 };
@@ -207,7 +207,7 @@ export const createFlyOutParams = (animationParams, geometry, animation) => {
 export const createFadeOutParams = (animationParams) => {
   animationParams.opacity = [
     { value: 1, duration: 0 },
-    { value: 0, duration: animationParams.duration }
+    { value: 0, duration: animationParams.duration },
   ];
 };
 
@@ -218,6 +218,6 @@ export const createFadeOutParams = (animationParams) => {
 export const createZoomOutParams = (animationParams) => {
   animationParams.scale = [
     { value: 1, duration: 0 },
-    { value: 0, duration: animationParams.duration }
+    { value: 0, duration: animationParams.duration },
   ];
 };

@@ -74,8 +74,8 @@ export const toHumanTime = (timeS, options = {}) => {
       minute: 'minute',
       seconds: 'seconds',
       second: 'second',
-      humanTimePattern: '@hours @hourLabel, @minutes @minuteLabel, @seconds @secondLabel'
-    }
+      humanTimePattern: '@hours @hourLabel, @minutes @minuteLabel, @seconds @secondLabel',
+    },
   }, options);
 
   if (typeof timeS !== 'number') {

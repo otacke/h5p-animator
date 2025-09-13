@@ -11,7 +11,7 @@ export default class TimeDisplay {
   constructor(params = {}) {
     this.params = Util.extend({
       currentTime: 0,
-      maxTime: 100
+      maxTime: 100,
     }, params);
 
     this.dom = document.createElement('div');

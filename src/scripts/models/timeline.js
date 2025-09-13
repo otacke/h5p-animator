@@ -12,7 +12,7 @@ import {
   createTranslateParams,
   createFlyOutParams,
   createFadeOutParams,
-  createZoomOutParams
+  createZoomOutParams,
 } from './timeline-helpers.js';
 
 export default class Timeline {
@@ -59,7 +59,7 @@ export default class Timeline {
       startWith: animation.startWith,
       easing: animation.easing,
       delay: secondsToMilliseconds(animation.delay),
-      duration: secondsToMilliseconds(animation.duration)
+      duration: secondsToMilliseconds(animation.duration),
     };
 
     const effectHandlers = {
@@ -74,7 +74,7 @@ export default class Timeline {
       translate: createTranslateParams,
       flyOut: createFlyOutParams,
       fadeOut: createFadeOutParams,
-      zoomOut: createZoomOutParams
+      zoomOut: createZoomOutParams,
     };
 
     const handler = effectHandlers[animation.effect];

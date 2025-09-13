@@ -6,7 +6,7 @@ export default class Slider {
 
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
-      maxValue: 100
+      maxValue: 100,
     }, params);
 
     this.callbacks = Util.extend({
@@ -14,7 +14,7 @@ export default class Slider {
       onSliderSeeked: () => {},
       onSliderEnded: () => {},
       onFocus: () => {},
-      onBlur: () => {}
+      onBlur: () => {},
     }, callbacks);
 
     this.dom = document.createElement('div');
@@ -102,10 +102,10 @@ export default class Slider {
     this.slider.setAttribute('aria-valuenow', value);
     this.slider.setAttribute(
       'aria-valuetext',
-      toHumanTime(value, { timeLabels: this.params.timeLabels })
+      toHumanTime(value, { timeLabels: this.params.timeLabels }),
     );
 
-    // eslint-disable-next-line no-magic-numbers
+     
     const percentage = (value / this.params.maxValue) * 100;
 
     this.slider.style.background =

@@ -24,7 +24,7 @@ export default class CanvasElement {
     this.instance = H5P.newRunnable(
       this.params.contentType,
       this.params.globals.get('contentId'),
-      H5P.jQuery(this.dom)
+      H5P.jQuery(this.dom),
     );
 
     this.dom.style.left = `${this.params.geometry.x}%`;
@@ -38,7 +38,7 @@ export default class CanvasElement {
       if (html5Video) {
         html5Video.setAttribute(
           'controlslist',
-          `${html5Video.getAttribute('controlslist')} nofullscreen`
+          `${html5Video.getAttribute('controlslist')} nofullscreen`,
         );
       }
     }
@@ -49,12 +49,12 @@ export default class CanvasElement {
 
     // Resize parent when children resize
     this.bubbleUp(
-      this.instance, 'resize', this.params.globals.get('mainInstance')
+      this.instance, 'resize', this.params.globals.get('mainInstance'),
     );
 
     // Resize children to fit inside parent
     this.bubbleDown(
-      this.params.globals.get('mainInstance'), 'resize', [this.instance]
+      this.params.globals.get('mainInstance'), 'resize', [this.instance],
     );
   }
 

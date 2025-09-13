@@ -35,12 +35,12 @@ export default class Animator extends H5P.EventDispatcher {
       editor: {
         background: {},
         elements: [],
-        animations: []
+        animations: [],
       },
       audio: {},
       behaviour: {
-        aspectRatio: DEFAULT_ASPECT_RATIO
-      }
+        aspectRatio: DEFAULT_ASPECT_RATIO,
+      },
     }, H5PUtil.getSemanticsDefaults());
 
     this.params = Util.extend(defaults, params);
@@ -71,18 +71,18 @@ export default class Animator extends H5P.EventDispatcher {
         audio: this.params.audio,
         backgroundColor: this.params.background.backgroundColor,
         backgroundImage: this.retrieveBackgroundImage(
-          this.params.background.backgroundImage?.path, this.contentId
+          this.params.background.backgroundImage?.path, this.contentId,
         ),
         description: this.params.behaviour.description,
         elements: this.retrieveElements(this.params.editor.elements),
         dictionary: this.dictionary,
         globals: this.globals,
-        hideControls: this.params.behaviour.hideControls
+        hideControls: this.params.behaviour.hideControls,
       },
       {
         onFullscreenClicked: () => {
           this.handleFullscreenClicked();
-        }
+        },
       });
 
     this.dom = this.main.getDOM();
@@ -124,8 +124,8 @@ export default class Animator extends H5P.EventDispatcher {
       sizeFactor: this.wrapper.clientWidth / this.baseWidth,
       containerSize: {
         width: this.wrapper.clientWidth,
-        height: this.wrapper.clientHeight
-      }
+        height: this.wrapper.clientHeight,
+      },
     });
   }
 
@@ -143,14 +143,14 @@ export default class Animator extends H5P.EventDispatcher {
           x: parseFloat(element.x),
           y: parseFloat(element.y),
           width: parseFloat(element.width),
-          height: parseFloat(element.height)
-        }
+          height: parseFloat(element.height),
+        },
       }))
       .filter((element) =>
         !Number.isNaN(element.geometry.x) &&
         !Number.isNaN(element.geometry.y) &&
         !Number.isNaN(element.geometry.width) &&
-        !Number.isNaN(element.geometry.height)
+        !Number.isNaN(element.geometry.height),
       );
   }
 
@@ -171,7 +171,7 @@ export default class Animator extends H5P.EventDispatcher {
           delay: '0',
           duration: '1',
           easing: 'linear',
-          startWith: 'afterPrevious'
+          startWith: 'afterPrevious',
         }, animation);
 
         animation.delay = parseFloat(animation.delay);
@@ -181,7 +181,7 @@ export default class Animator extends H5P.EventDispatcher {
       })
       .filter((animation) =>
         !Number.isNaN(animation.delay) &&
-        !Number.isNaN(animation.duration)
+        !Number.isNaN(animation.duration),
       );
 
     return animations ?? [];
@@ -282,7 +282,7 @@ export default class Animator extends H5P.EventDispatcher {
   getTitle() {
     // H5P Core function: createTitle
     return H5P.createTitle(
-      this.extras?.metadata?.title || DEFAULT_DESCRIPTION
+      this.extras?.metadata?.title || DEFAULT_DESCRIPTION,
     );
   }
 

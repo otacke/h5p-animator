@@ -22,7 +22,7 @@ export default class Toolbar {
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
       buttons: [],
-      classes: []
+      classes: [],
     }, params);
 
     this.callbacks = Util.extend({
@@ -30,7 +30,7 @@ export default class Toolbar {
       onSliderSeeked: () => {},
       onSliderEnded: () => {},
       onPlayClicked: () => {},
-      onFullscreenClicked: () => {}
+      onFullscreenClicked: () => {},
     }, callbacks);
 
     this.buttons = {};
@@ -46,8 +46,8 @@ export default class Toolbar {
         type: 'toggle',
         a11y: {
           active: params.dictionary.get('a11y.pause'),
-          inactive: params.dictionary.get('a11y.play')
-        }
+          inactive: params.dictionary.get('a11y.play'),
+        },
       },
       {
         onClick: () => {
@@ -58,8 +58,8 @@ export default class Toolbar {
         },
         onBlur: () => {
           this.handleChildLostFocus();
-        }
-      }
+        },
+      },
     );
 
     this.dom.append(this.buttons.play.getDOM());
@@ -75,8 +75,8 @@ export default class Toolbar {
           minute: this.params.dictionary.get('a11y.minute'),
           seconds: this.params.dictionary.get('a11y.seconds'),
           second: this.params.dictionary.get('a11y.second'),
-          humanTimePattern: this.params.dictionary.get('a11y.humanTimePattern')
-        }
+          humanTimePattern: this.params.dictionary.get('a11y.humanTimePattern'),
+        },
       },
       {
         onSliderStarted: () => {
@@ -93,8 +93,8 @@ export default class Toolbar {
         },
         onBlur: () => {
           this.handleChildLostFocus();
-        }
-      }
+        },
+      },
     );
     this.dom.append(this.slider.getDOM());
 
@@ -110,13 +110,13 @@ export default class Toolbar {
           pulseStates: [
             {
               id: 'enter-fullscreen',
-              label: this.params.dictionary.get('a11y.enterFullscreen')
+              label: this.params.dictionary.get('a11y.enterFullscreen'),
             },
             {
               id: 'exit-fullscreen',
-              label: this.params.dictionary.get('a11y.exitFullscreen')
-            }
-          ]
+              label: this.params.dictionary.get('a11y.exitFullscreen'),
+            },
+          ],
         },
         {
           onClick: () => {
@@ -127,8 +127,8 @@ export default class Toolbar {
           },
           onBlur: () => {
             this.handleChildLostFocus();
-          }
-        }
+          },
+        },
       );
       this.dom.append(this.buttons.fullscreen.getDOM());
     }

@@ -27,7 +27,7 @@ export default class Canvas {
     if (params.backgroundImage) {
       this.dom.classList.add('has-background-image');
       this.dom.style.setProperty(
-        '--background-image', `url(${params.backgroundImage})`
+        '--background-image', `url(${params.backgroundImage})`,
       );
     }
 
@@ -35,7 +35,7 @@ export default class Canvas {
       return new CanvasElement({
         contentType: element.contentType,
         geometry: element.geometry,
-        globals: params.globals
+        globals: params.globals,
       });
     });
 
@@ -61,11 +61,11 @@ export default class Canvas {
     if (params.sizeFactor) {
       // Using same logic and values as CoursePresentation to scale text.
       this.dom.style.fontSize =
-      `${BASE_FONT_SIZE_PX * params.sizeFactor}px`;
+        `${BASE_FONT_SIZE_PX * params.sizeFactor}px`;
     }
 
     this.dom.style.setProperty(
-      '--max-height', params.maxHeight ? `${params.maxHeight}px` : ''
+      '--max-height', params.maxHeight ? `${params.maxHeight}px` : '',
     );
   }
 }

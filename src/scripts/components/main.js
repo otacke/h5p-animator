@@ -32,7 +32,7 @@ export default class AnimatorMain {
     }, params);
 
     this.callbacks = Util.extend({
-      onFullscreenClicked: () => {}
+      onFullscreenClicked: () => {},
     }, callbacks);
 
     this.isPlayingState = false;
@@ -46,7 +46,7 @@ export default class AnimatorMain {
         onAudioContextReady: () => {
           this.toolbar?.enableButton('play');
           this.toolbar?.enableSlider();
-        }
+        },
       });
       this.fillJukebox();
     }
@@ -68,7 +68,7 @@ export default class AnimatorMain {
       backgroundColor: this.params.backgroundColor,
       backgroundImage: this.params.backgroundImage,
       globals: this.params.globals,
-      elements: this.params.elements
+      elements: this.params.elements,
     });
 
     const elementsLookup = this.canvas.elements.reduce((acc, element) => {
@@ -76,7 +76,7 @@ export default class AnimatorMain {
       if (subContentId) {
         acc[subContentId] = {
           dom: element.getDOM(),
-          geometry: element.getGeometry()
+          geometry: element.getGeometry(),
         };
       }
 
@@ -85,7 +85,7 @@ export default class AnimatorMain {
 
     this.timeline = new Timeline({
       animations: this.params.animations,
-      elementsLookup: elementsLookup
+      elementsLookup: elementsLookup,
     });
 
     this.duration = this.timeline.getDuration();
@@ -95,7 +95,7 @@ export default class AnimatorMain {
         dictionary: this.params.dictionary,
         globals: this.params.globals,
         maxTime: millisecondsToSeconds(this.duration),
-        hideControls: this.params.hideControls
+        hideControls: this.params.hideControls,
       },
       {
         onSliderStarted: () => {
@@ -112,8 +112,8 @@ export default class AnimatorMain {
         },
         onFullscreenClicked: () => {
           this.callbacks.onFullscreenClicked();
-        }
-      }
+        },
+      },
     );
 
     if (this.hasAudio) {
@@ -179,7 +179,7 @@ export default class AnimatorMain {
 
     this.canvas.resize({
       sizeFactor: params.sizeFactor,
-      ...(maxCanvasHeight && { maxHeight: maxCanvasHeight })
+      ...(maxCanvasHeight && { maxHeight: maxCanvasHeight }),
     });
   }
 
@@ -315,7 +315,7 @@ export default class AnimatorMain {
 
     if (this.params.audio.audio?.[0]?.path) {
       const src = H5P.getPath(
-        this.params.audio.audio[0].path, this.params.globals.get('contentId')
+        this.params.audio.audio[0].path, this.params.globals.get('contentId'),
       );
 
       const crossOrigin =
@@ -324,7 +324,7 @@ export default class AnimatorMain {
 
       audios.background = {
         src: src,
-        crossOrigin: crossOrigin
+        crossOrigin: crossOrigin,
       };
     }
     this.jukebox.fill(audios);
