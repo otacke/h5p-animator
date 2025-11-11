@@ -1,7 +1,6 @@
 import Util from '@services/util.js';
 import H5PUtil from '@services/h5p-util.js';
 import Dictionary from '@services/dictionary.js';
-import Globals from '@services/globals.js';
 import AnimatorMain from '@components/main.js';
 import '@styles/h5p-animator.scss';
 
@@ -53,7 +52,7 @@ export default class Animator extends H5P.EventDispatcher {
     this.dictionary.fill({ l10n: this.params.l10n, a11y: this.params.a11y });
 
     // Set globals
-    this.globals = new Globals();
+    this.globals = new Map();
     this.globals.set('mainInstance', this);
     this.globals.set('contentId', this.contentId);
     this.globals.set('isFullscreenSupported', this.isRoot() && H5P.fullscreenSupported);
