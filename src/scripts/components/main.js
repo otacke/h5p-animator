@@ -131,7 +131,7 @@ export default class AnimatorMain {
       this.dom.append(this.toolbar.getDOM());
     }
 
-    document.body.addEventListener('keydown', (event) => {
+    this.handleDocumentKeydown = (event) => {
       if (event.key === KEY_REWIND) {
         this.handleSliderSeeked(this.currentTime - 1, true);
       }
@@ -144,7 +144,8 @@ export default class AnimatorMain {
       else if (event.key === KEY_FORWARD) {
         this.handleSliderSeeked(this.currentTime + 1, true);
       }
-    });
+    };
+    document.body.addEventListener('keydown', this.handleDocumentKeydown);
   }
 
   /**
@@ -328,5 +329,29 @@ export default class AnimatorMain {
       };
     }
     this.jukebox.fill(audios);
+  }
+
+  /**
+   * Destroy self and all child components.
+   */
+  destroy() {
+    document.body.removeEventListener('keydown', this.handleDocumentKeydown);
+
+    this.stop();
+
+    this.jukebox?.destroy();
+    this.canvas?.destroy();
+    this.timeline?.destroy();
+    this.toolbar?.destroy();
+
+    if (this.dom?.parentNode) {
+      this.dom.parentNode.removeChild(this.dom);
+    }
+
+    this.jukebox = null;
+    this.canvas = null;
+    this.timeline = null;
+    this.toolbar = null;
+    this.dom = null;
   }
 }

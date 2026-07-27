@@ -68,4 +68,19 @@ export default class Canvas {
       '--max-height', params.maxHeight ? `${params.maxHeight}px` : '',
     );
   }
+
+  /**
+   * Destroy self and all child elements.
+   */
+  destroy() {
+    this.elements.forEach((element) => {
+      element.destroy();
+    });
+    this.elements = [];
+
+    if (this.dom?.parentNode) {
+      this.dom.parentNode.removeChild(this.dom);
+    }
+    this.dom = null;
+  }
 }

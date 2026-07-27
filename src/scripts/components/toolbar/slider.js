@@ -179,4 +179,14 @@ export default class Slider {
     this.keydownTime = 0;
     this.callbacks.onSliderEnded();
   }
+
+  /**
+   * Destroy self.
+   */
+  destroy() {
+    const newSlider = this.slider.cloneNode(true);
+    this.dom.replaceChild(newSlider, this.slider);
+    this.slider = null;
+    this.dom = null;
+  }
 }

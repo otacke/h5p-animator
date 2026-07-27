@@ -170,6 +170,9 @@ export default class Jukebox {
     request.open('GET', params.url, true);
     request.responseType = 'arraybuffer';
 
+    // Store request reference for cleanup
+    this.audios[params.id].request = request;
+
     // Decode asynchronously
     request.onload = () => {
       this.audioContext.decodeAudioData(request.response, (buffer) => {
@@ -470,5 +473,41 @@ export default class Jukebox {
     }
 
     return this.audios[id].isMuted;
+  }
+
+  /**
+   * Destroy self and all audio resources.
+   */
+  destroy() {
+    // Abort any pending XMLHttpRequests
+    for (const id in this.audios) {
+      if (this.audios[id].request) {
+        this.audios[id].request.abort();
+      }
+    }
+
+    try {
+      this.audioContext?.close();
+    }
+    catch (e) {
+      // AudioContext may already be closed
+    }
+
+    // Disconnect all audio nodes and clear timeouts
+    for (const id in this.audios) {
+      const audio = this.audios[id];
+      audio.source?.disconnect();
+      audio.gainNode?.disconnect();
+      window.clearTimeout(audio.fadeTimeout);
+    }
+
+    if (this.dispatcher?.parentNode) {
+      this.dispatcher.parentNode.removeChild(this.dispatcher);
+    }
+
+    this.audioContext = null;
+    this.dispatcher = null;
+    this.audios = {};
+    this.queued = [];
   }
 }

@@ -83,6 +83,18 @@ export default class CanvasElement {
   }
 
   /**
+   * Destroy self and child H5P instance.
+   */
+  destroy() {
+    this.instance?.resetTask?.();
+    this.instance = null;
+    if (this.dom?.parentNode) {
+      this.dom.parentNode.removeChild(this.dom);
+    }
+    this.dom = null;
+  }
+
+  /**
    * Make it easy to bubble events from child to parent.
    * @param {object} origin Origin of event.
    * @param {string} eventName Name of event.

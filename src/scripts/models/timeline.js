@@ -183,4 +183,13 @@ export default class Timeline {
   seek(timeMs) {
     this.timeline.seek(timeMs);
   }
+
+  /**
+   * Destroy self.
+   */
+  destroy() {
+    this.timeline?.pause();
+    this.timeline = null;
+    this.animations = null;
+  }
 }
