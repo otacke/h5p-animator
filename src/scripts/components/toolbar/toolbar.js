@@ -308,4 +308,23 @@ export default class Toolbar {
 
     this.dom.classList.add('transparent');
   }
+
+  /**
+   * Destroy self and all child components.
+   */
+  destroy() {
+    window.clearTimeout(this.hideToolbarTimeout);
+
+    this.slider?.destroy();
+    this.timeDisplay?.destroy();
+
+    for (const id in this.buttons) {
+      this.buttons[id]?.destroy();
+    }
+
+    this.buttons = {};
+    this.slider = null;
+    this.timeDisplay = null;
+    this.dom = null;
+  }
 }

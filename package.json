@@ -37,7 +37,7 @@
     "webpack-cli": "^7.2.1"
   },
   "dependencies": {
-    "animejs": "^3.2.2",
+    "animejs": "^4.5.0",
     "he": "^1.2.0"
   },
   "browserslist": "> 0.5%, last 3 versions, Firefox ESR, not dead"

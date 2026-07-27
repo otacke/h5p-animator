@@ -118,9 +118,10 @@ export default class Animator extends H5P.EventDispatcher {
 
     this.baseWidth = parseInt(this.wrapper.style.width ?? '0') || BASE_WIDTH_PX;
 
-    this.on('resize', () => {
+    this.handleResize = () => {
       this.resize();
-    });
+    };
+    this.on('resize', this.handleResize);
   }
 
   /**
@@ -307,5 +308,19 @@ export default class Animator extends H5P.EventDispatcher {
    */
   resetTask() {
     this.main.reset();
+  }
+
+  /**
+   * Destroy self and all child components.
+   */
+  destroy() {
+    this.main?.destroy();
+    this.off('resize', this.handleResizeBound);
+    this.wrapper?.classList.remove('h5p-animator');
+
+    this.main = null;
+    this.handleResizeBound = null;
+    this.wrapper = null;
+    this.dom = null;
   }
 }
