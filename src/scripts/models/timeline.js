@@ -1,4 +1,4 @@
-import anime from 'animejs/lib/anime.es.js';
+import { createTimeline } from 'animejs';
 import { secondsToMilliseconds } from '@services/time-util.js';
 import {
   createFlyInParams,
@@ -23,12 +23,44 @@ export default class Timeline {
    * @param {object[]} [params.elementsLookup] Info about elements by subContentId: dom and geometry.
    */
   constructor(params = {}) {
-    this.timeline = anime.timeline({ autoplay: false });
+    this.timeline = createTimeline({ autoplay: false });
 
     this.animations = this.createAnimations(params.animations, params.elementsLookup);
 
+    this.setInitialStates();
+
     this.animations.forEach((animation) => {
-      this.timeline.add(animation, animation.timeOffset);
+      const { targets, timeOffset, ...animationParams } = animation;
+      this.timeline.add(targets, animationParams, timeOffset);
+    });
+
+    // Timeline isn't rendered by anime.js 4 until played or seeked. Render first frame right away to avoid showing all.
+    this.timeline.seek(0);
+  }
+
+  /**
+   * Put elements into state that their first animation starts with, e.g. to make transparent.
+   */
+  setInitialStates() {
+    const handledTargets = new Set();
+
+    this.animations.forEach((animation) => {
+      const targets = animation.targets;
+      if (handledTargets.has(targets)) {
+        return; // Only earliest animation determines start state.
+      }
+      handledTargets.add(targets);
+
+      const initialParams = {};
+      Object.entries(animation).forEach(([key, keyframes]) => {
+        if (Array.isArray(keyframes) && keyframes[0]?.duration === 0) {
+          initialParams[key] = keyframes[0].to;
+        }
+      });
+
+      if (Object.keys(initialParams).length > 0) {
+        this.timeline.set(targets, initialParams, 0);
+      }
     });
   }
 
@@ -57,7 +89,7 @@ export default class Timeline {
     const animationParams = {
       targets: animation.dom,
       startWith: animation.startWith,
-      easing: animation.easing,
+      ease: animation.easing,
       delay: secondsToMilliseconds(animation.delay),
       duration: secondsToMilliseconds(animation.duration),
     };

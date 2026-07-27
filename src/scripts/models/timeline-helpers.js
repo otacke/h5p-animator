@@ -57,15 +57,15 @@ export const createFlyInParams = (animationParams, geometry, animation) => {
 
   if (offsiteXIn !== 0) {
     animationParams.translateX = [
-      { value: `${offsiteXIn}%`, duration: 0 },
-      { value: '0%', duration: animationParams.duration },
+      { to: `${offsiteXIn}%`, duration: 0 },
+      { to: '0%', duration: animationParams.duration },
     ];
   }
 
   if (offsiteYIn !== 0) {
     animationParams.translateY = [
-      { value: `${offsiteYIn}%`, duration: 0 },
-      { value: '0%', duration: animationParams.duration },
+      { to: `${offsiteYIn}%`, duration: 0 },
+      { to: '0%', duration: animationParams.duration },
     ];
   }
 };
@@ -76,8 +76,8 @@ export const createFlyInParams = (animationParams, geometry, animation) => {
  */
 export const createFadeInParams = (animationParams) => {
   animationParams.opacity = [
-    { value: 0, duration: 0 },
-    { value: 1, duration: animationParams.duration },
+    { to: 0, duration: 0 },
+    { to: 1, duration: animationParams.duration },
   ];
 };
 
@@ -87,8 +87,8 @@ export const createFadeInParams = (animationParams) => {
  */
 export const createZoomInParams = (animationParams) => {
   animationParams.scale = [
-    { value: 0, duration: 0 },
-    { value: 1, duration: animationParams.duration },
+    { to: 0, duration: 0 },
+    { to: 1, duration: animationParams.duration },
   ];
 };
 
@@ -100,7 +100,7 @@ export const createZoomInParams = (animationParams) => {
  */
 export const createRotateParams = (animationParams, geometry, animation) => {
   animationParams.rotate = [
-    { value: animation.rotate },
+    { to: animation.rotate },
   ];
 };
 
@@ -110,9 +110,9 @@ export const createRotateParams = (animationParams, geometry, animation) => {
  */
 export const createPulseParams = (animationParams) => {
   animationParams.scale = [
-    { value: 1 },
-    { value: 1.05 },
-    { value: 1 },
+    { to: 1 },
+    { to: 1.05 },
+    { to: 1 },
   ];
 };
 
@@ -122,13 +122,13 @@ export const createPulseParams = (animationParams) => {
  */
 export const createWobbleParams = (animationParams) => {
   animationParams.translateX = [
-    { value: 0 },
-    { value: '-25%' },
-    { value: '20%' },
-    { value: '-15%' },
-    { value: '10%' },
-    { value: '-5%' },
-    { value: 0 },
+    { to: 0 },
+    { to: '-25%' },
+    { to: '20%' },
+    { to: '-15%' },
+    { to: '10%' },
+    { to: '-5%' },
+    { to: 0 },
   ];
 };
 
@@ -138,13 +138,13 @@ export const createWobbleParams = (animationParams) => {
  */
 export const createShakeXParams = (animationParams) => {
   animationParams.translateX = [
-    { value: 0 },
-    { value: '-10%' },
-    { value: '10%' },
-    { value: '-10%' },
-    { value: '10%' },
-    { value: '-10%' },
-    { value: 0 },
+    { to: 0 },
+    { to: '-10%' },
+    { to: '10%' },
+    { to: '-10%' },
+    { to: '10%' },
+    { to: '-10%' },
+    { to: 0 },
   ];
 };
 
@@ -154,13 +154,13 @@ export const createShakeXParams = (animationParams) => {
  */
 export const createShakeYParams = (animationParams) => {
   animationParams.translateY = [
-    { value: 0 },
-    { value: '-10%' },
-    { value: '10%' },
-    { value: '-10%' },
-    { value: '10%' },
-    { value: '-10%' },
-    { value: 0 },
+    { to: 0 },
+    { to: '-10%' },
+    { to: '10%' },
+    { to: '-10%' },
+    { to: '10%' },
+    { to: '-10%' },
+    { to: 0 },
   ];
 };
 
@@ -171,8 +171,8 @@ export const createShakeYParams = (animationParams) => {
  * @param {object} animation Animation parameters set by editor.
  */
 export const createTranslateParams = (animationParams, geometry, animation) => {
-  animationParams.translateX = [{ value: `${animation.translateX}%` }];
-  animationParams.translateY = [{ value: `${animation.translateY}%` }];
+  animationParams.translateX = [{ to: `${animation.translateX}%` }];
+  animationParams.translateY = [{ to: `${animation.translateY}%` }];
 };
 
 /**
@@ -187,15 +187,15 @@ export const createFlyOutParams = (animationParams, geometry, animation) => {
 
   if (offsiteXOut !== 0) {
     animationParams.translateX = [
-      { value: '0%', duration: 0 },
-      { value: `${offsiteXOut}%`, duration: animationParams.duration },
+      { to: '0%', duration: 0 },
+      { to: `${offsiteXOut}%`, duration: animationParams.duration },
     ];
   }
 
   if (offsiteYOut !== 0) {
     animationParams.translateY = [
-      { value: '0%', duration: 0 },
-      { value: `${offsiteYOut}%`, duration: animationParams.duration },
+      { to: '0%', duration: 0 },
+      { to: `${offsiteYOut}%`, duration: animationParams.duration },
     ];
   }
 };
@@ -206,8 +206,8 @@ export const createFlyOutParams = (animationParams, geometry, animation) => {
  */
 export const createFadeOutParams = (animationParams) => {
   animationParams.opacity = [
-    { value: 1, duration: 0 },
-    { value: 0, duration: animationParams.duration },
+    { to: 1, duration: 0 },
+    { to: 0, duration: animationParams.duration },
   ];
 };
 
@@ -217,7 +217,7 @@ export const createFadeOutParams = (animationParams) => {
  */
 export const createZoomOutParams = (animationParams) => {
   animationParams.scale = [
-    { value: 1, duration: 0 },
-    { value: 0, duration: animationParams.duration },
+    { to: 1, duration: 0 },
+    { to: 0, duration: animationParams.duration },
   ];
 };
