@@ -326,15 +326,15 @@
                   "label": "Linear"
                 },
                 {
-                  "value": "easeInQuad",
+                  "value": "inQuad",
                   "label": "Ease-in"
                 },
                 {
-                  "value": "easeOutQuad",
+                  "value": "outQuad",
                   "label": "Ease-out"
                 },
                 {
-                  "value": "easeInOutQuad",
+                  "value": "inOutQuad",
                   "label": "Ease-in-out"
                 }
               ],
